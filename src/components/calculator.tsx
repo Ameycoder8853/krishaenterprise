@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { z } from 'zod';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -202,6 +202,15 @@ export default function Calculator() {
             });
         });
   };
+
+  const onInvalid = (errors: FieldErrors<CalculatorValues>) => {
+    console.error("Form validation failed:", errors);
+    toast({
+        variant: "destructive",
+        title: "Invalid Input",
+        description: "Please check the form for errors and try again.",
+    });
+  };
   
   const handleReset = () => {
     reset({
@@ -236,7 +245,7 @@ export default function Calculator() {
         <CardTitle className="font-headline text-2xl">Rent Agreement Cost Calculator</CardTitle>
         <CardDescription>Get a transparent, detailed cost breakdown for your agreement in India.</CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <CardContent className="space-y-6 pt-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="space-y-2">
