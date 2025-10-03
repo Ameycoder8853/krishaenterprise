@@ -9,17 +9,17 @@ const teamMembers = [
   {
     name: "John Doe",
     role: "Founder & CEO",
-    avatar: PlaceHolderImages[1],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-1'),
   },
   {
     name: "Jane Smith",
     role: "Head of Legal",
-    avatar: PlaceHolderImages[2],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-2'),
   },
   {
     name: "Anil Kumar",
     role: "Lead Developer",
-    avatar: PlaceHolderImages[3],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-3'),
   },
 ];
 
@@ -42,7 +42,8 @@ const values = [
 ]
 
 export default function AboutPage() {
-  const aboutImage = PlaceHolderImages[0];
+  const aboutImage = PlaceHolderImages.find(img => img.id === 'about-us');
+  const missionImage = PlaceHolderImages.find(img => img.id === 'our-mission');
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -72,7 +73,7 @@ export default function AboutPage() {
                         </p>
                     </div>
                     <div className="relative h-80 rounded-lg overflow-hidden">
-                        <Image src={aboutImage.imageUrl} alt="Our Team" layout="fill" objectFit="cover" data-ai-hint="team office" />
+                       {aboutImage && <Image src={aboutImage.imageUrl} alt="Our Team" layout="fill" objectFit="cover" data-ai-hint="team office" />}
                     </div>
                 </div>
             </div>
@@ -82,7 +83,7 @@ export default function AboutPage() {
             <div className="container">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                      <div className="relative h-80 rounded-lg overflow-hidden md:order-2">
-                        <Image src={PlaceHolderImages[4].imageUrl} alt="Our Mission" layout="fill" objectFit="cover" data-ai-hint="abstract goal" />
+                        {missionImage && <Image src={missionImage.imageUrl} alt="Our Mission" layout="fill" objectFit="cover" data-ai-hint="abstract goal" />}
                     </div>
                     <div className="md:order-1">
                         <h2 className="font-headline text-3xl font-bold">Our Mission</h2>

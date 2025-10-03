@@ -13,7 +13,7 @@ const blogPosts = [
     author: "Jane Smith",
     date: "2024-07-15",
     excerpt: "Everything you need to know about rental agreements, from key clauses to the registration process. Ensure you are protected as a landlord or tenant...",
-    image: PlaceHolderImages[0],
+    image: PlaceHolderImages.find(img => img.id === 'hero-image'),
     slug: "/blog/understanding-rental-agreements"
   },
   {
@@ -21,7 +21,7 @@ const blogPosts = [
     author: "John Doe",
     date: "2024-07-10",
     excerpt: "One of the most common questions we get. This post breaks down the key differences, pros, and cons of notarized and registered agreements in India.",
-    image: PlaceHolderImages[4],
+    image: PlaceHolderImages.find(img => img.id === 'ai-feature-image'),
     slug: "/blog/notarized-vs-registered"
   },
   {
@@ -29,7 +29,7 @@ const blogPosts = [
     author: "Anil Kumar",
     date: "2024-07-05",
     excerpt: "Starting a business with a partner? A solid partnership deed is crucial. We cover the 5 must-have clauses to protect your business and relationship.",
-    image: PlaceHolderImages[3],
+    image: PlaceHolderImages.find(img => img.id === 'testimonial-3'),
     slug: "/blog/5-clauses-for-partnership-deed"
   },
 ];
@@ -57,7 +57,7 @@ export default function BlogPage() {
                 <Card key={post.title} className="overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                   <Link href={post.slug} className="block">
                     <CardHeader className="p-0">
-                      <div className="relative h-56 w-full">
+                      {post.image && <div className="relative h-56 w-full">
                         <Image
                           src={post.image.imageUrl}
                           alt={post.title}
@@ -65,7 +65,7 @@ export default function BlogPage() {
                           objectFit="cover"
                           data-ai-hint={post.image.imageHint}
                         />
-                      </div>
+                      </div>}
                     </CardHeader>
                     <CardContent className="p-6">
                       <h2 className="font-headline text-xl font-semibold mb-2">{post.title}</h2>

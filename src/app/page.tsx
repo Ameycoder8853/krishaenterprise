@@ -85,21 +85,21 @@ const testimonials = [
   {
     name: 'Rohan Sharma',
     title: 'Startup Founder',
-    avatar: PlaceHolderImages[1],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-1'),
     quote:
       'Krisha Enterprise made our rental agreement process incredibly simple. Their team was responsive and the turnaround was super fast!',
   },
   {
     name: 'Priya Mehta',
     title: 'Landlord',
-    avatar: PlaceHolderImages[2],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-2'),
     quote:
       'The pricing calculator was spot on! I could estimate all costs upfront. The entire service is transparent and user-friendly. Highly recommended.',
   },
   {
     name: 'Anil Kumar',
     title: 'Small Business Owner',
-    avatar: PlaceHolderImages[3],
+    avatar: PlaceHolderImages.find(img => img.id === 'testimonial-3'),
     quote:
       "Creating a partnership deed was daunting, but Krisha Enterprise guided me through every step. A professional and reliable service.",
   },
@@ -124,27 +124,27 @@ const whyChooseUs = [
 ]
 
 export default function Home() {
-  const heroImage = PlaceHolderImages[0];
+  const heroImage = PlaceHolderImages.find(img => img.id === 'hero-image');
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
         <section className="relative h-auto py-20 md:py-24 lg:py-32">
-          <Image
+          {heroImage && <Image
             src={heroImage.imageUrl}
             alt={heroImage.description}
             data-ai-hint={heroImage.imageHint}
             fill
             className="object-cover"
             priority
-          />
+          />}
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative z-10 container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-white">
                 <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                  Online Rent Agreement & Legal Documents
+                  ONLINE RENT AGREEMENT
                 </h1>
                 <p className="mt-4 max-w-[600px] text-lg text-white/90 md:text-xl">
                   India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
@@ -283,7 +283,7 @@ export default function Home() {
                            <blockquote className="text-base text-foreground/90 mb-4">
                             &ldquo;{testimonial.quote}&rdquo;
                           </blockquote>
-                          <div className="mt-auto flex items-center gap-4">
+                          {testimonial.avatar && <div className="mt-auto flex items-center gap-4">
                             <Avatar className="h-12 w-12">
                               <AvatarImage
                                 src={testimonial.avatar.imageUrl}
@@ -300,7 +300,7 @@ export default function Home() {
                                 {testimonial.title}
                               </p>
                             </div>
-                          </div>
+                          </div>}
                         </CardContent>
                       </Card>
                     </div>
