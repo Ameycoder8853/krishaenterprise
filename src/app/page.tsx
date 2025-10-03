@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -40,6 +41,7 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Calculator from '@/components/calculator';
+import { ContactForm } from '@/components/contact-form';
 
 const services = [
   {
@@ -187,29 +189,27 @@ export default function Home() {
           <div className="relative z-10 container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-white">
-                 <div className="text-white">
-                    <div className="grid sm:grid-cols-3 gap-6 items-center mb-8">
-                        {ctaFeatures.map((feature, index) => (
-                            <div key={feature.title} className="flex flex-col items-center text-center gap-2 relative">
-                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                                    <feature.icon className="h-8 w-8 text-white" />
-                                </div>
-                                <p className="font-semibold uppercase tracking-wider text-sm">{feature.title}</p>
+                 <div className="grid sm:grid-cols-3 gap-6 items-center mb-8">
+                    {ctaFeatures.map((feature, index) => (
+                        <div key={feature.title} className="flex flex-col items-center text-center gap-2 relative">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+                                <feature.icon className="h-8 w-8 text-white" />
                             </div>
-                        ))}
-                    </div>
-                    <h2 className="font-headline text-2xl font-bold tracking-tight sm:text-3xl text-center">NO GOVERNMENT OFFICE VISITS!</h2>
-                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                         <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
-                            <Link href="/services">Create Agreement</Link>
-                        </Button>
-                         <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
-                            <a href="tel:+919833799289">
-                                <Phone className="mr-2 h-5 w-5"/>
-                                +91 9833 799 289
-                            </a>
-                        </Button>
-                    </div>
+                            <p className="font-semibold uppercase tracking-wider text-sm">{feature.title}</p>
+                        </div>
+                    ))}
+                </div>
+                <h2 className="font-headline text-2xl font-bold tracking-tight sm:text-3xl text-center">NO GOVERNMENT OFFICE VISITS!</h2>
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                      <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
+                        <Link href="/services">Create Agreement</Link>
+                    </Button>
+                      <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
+                        <a href="tel:+919833799289">
+                            <Phone className="mr-2 h-5 w-5"/>
+                            +91 9833 799 289
+                        </a>
+                    </Button>
                 </div>
               </div>
                <div className="bg-background/90 backdrop-blur-sm rounded-lg">
@@ -396,6 +396,22 @@ export default function Home() {
                   </AccordionItem>
                 ))}
               </Accordion>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="py-12 md:py-24">
+          <div className="container">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                Get In Touch
+              </h2>
+              <p className="mt-4 text-lg text-foreground/80">
+                Have questions? We&apos;d love to hear from you. Fill out the form below and we&apos;ll get back to you shortly.
+              </p>
+            </div>
+            <div className="mt-12 max-w-xl mx-auto">
+              <ContactForm />
             </div>
           </div>
         </section>
