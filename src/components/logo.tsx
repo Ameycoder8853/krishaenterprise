@@ -8,64 +8,12 @@ export function Logo({ className }: { className?: string }) {
       className={cn(className)}
       aria-label="Krisha Enterprise Logo"
     >
-      <rect width="100" height="100" fill="black" />
-      <g transform="translate(50,50) rotate(-22.5)">
-        {[...Array(4)].map((_, i) => (
-          <g key={`swoosh-group-${i}`} transform={`rotate(${i * 90})`}>
-            <path
-              d="M 0 -48 C 15 -48, 28 -40, 38 -25"
-              stroke="url(#teal-gradient)"
-              strokeWidth="5"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 0 -42 C 12 -42, 23 -36, 31 -24"
-              stroke="url(#teal-gradient)"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-            />
-             <path
-              d="M -10 -45 C 5 -45, 15 -38, 25 -25"
-              stroke="url(#teal-gradient)"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </g>
-        ))}
-         {[...Array(4)].map((_, i) => (
-          <g key={`swoosh-group-2-${i}`} transform={`rotate(${i * 90 + 45})`}>
-            <path
-              d="M 0 -48 C 15 -48, 28 -40, 38 -25"
-              stroke="url(#orange-gradient)"
-              strokeWidth="5"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 0 -42 C 12 -42, 23 -36, 31 -24"
-              stroke="url(#orange-gradient)"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-            />
-             <path
-              d="M -10 -45 C 5 -45, 15 -38, 25 -25"
-              stroke="url(#orange-gradient)"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </g>
-        ))}
-      </g>
+      <rect width="100" height="100" rx="12" fill="black" />
       <text
         x="50"
         y="58"
         fontFamily="Poppins, sans-serif"
-        fontSize="32"
+        fontSize="48"
         fontWeight="bold"
         fill="white"
         textAnchor="middle"
@@ -74,12 +22,12 @@ export function Logo({ className }: { className?: string }) {
       </text>
       <defs>
         <linearGradient id="teal-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#1f9c8e" />
-          <stop offset="100%" stopColor="#00e5ff" />
+          <stop offset="0%" stopColor="#00aeef" />
+          <stop offset="100%" stopColor="#21e9c5" />
         </linearGradient>
         <linearGradient id="orange-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#f57c00" />
-          <stop offset="100%" stopColor="#ffb74d" />
+          <stop offset="0%" stopColor="#fbb040" />
+          <stop offset="100%" stopColor="#ffecb3" />
         </linearGradient>
       </defs>
     </svg>
