@@ -1,3 +1,4 @@
+
 'use client';
 
 import Header from "@/components/layout/header";
@@ -26,6 +27,13 @@ export default function AdminPage() {
     }).format(Math.ceil(amount));
   };
 
+  const getMonthlyRent = (submission: any) => {
+      if (submission.formValues.rentType === 'incremental') {
+          return submission.formValues.term1MonthlyRent;
+      }
+      return submission.formValues.rent;
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -44,7 +52,9 @@ export default function AdminPage() {
                   <TableRow>
                     <TableHead>Date</TableHead>
                     <TableHead>Location</TableHead>
+                    <TableHead>Rent Type</TableHead>
                     <TableHead>Monthly Rent</TableHead>
+                    <TableHead>Deposit</TableHead>
                     <TableHead>Total Cost</TableHead>
                     <TableHead>Contact</TableHead>
                   </TableRow>
@@ -56,6 +66,8 @@ export default function AdminPage() {
                       <TableCell><Skeleton className="h-4 w-32" /></TableCell>
                       <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                       <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
                       <TableCell><Skeleton className="h-4 w-28" /></TableCell>
                     </TableRow>
                   ))}
@@ -63,14 +75,16 @@ export default function AdminPage() {
                     <TableRow key={submission.id}>
                       <TableCell>{new Date(submission.submissionDate).toLocaleDateString()}</TableCell>
                       <TableCell>{submission.formValues.location}</TableCell>
-                      <TableCell>{formatCurrency(submission.formValues.rent)}</TableCell>
+                      <TableCell>{submission.formValues.rentType}</TableCell>
+                      <TableCell>{formatCurrency(getMonthlyRent(submission))}</TableCell>
+                      <TableCell>{formatCurrency(submission.formValues.refundableDeposit)}</TableCell>
                       <TableCell>{formatCurrency(submission.calculatedCosts.total)}</TableCell>
                       <TableCell>{submission.formValues.mobile}</TableCell>
                     </TableRow>
                   ))}
                   {!isLoading && submissions?.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center">No submissions yet.</TableCell>
+                      <TableCell colSpan={7} className="text-center">No submissions yet.</TableCell>
                     </TableRow>
                   )}
                 </TableBody>
@@ -83,3 +97,6 @@ export default function AdminPage() {
     </div>
   );
 }
+
+
+    

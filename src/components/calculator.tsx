@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from './ui/separator';
-import { useFirestore, useMemoFirebase } from '@/firebase';
+import { useFirestore } from '@/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { errorEmitter } from '@/firebase/error-emitter';
@@ -54,21 +55,21 @@ const calculatorSchema = z.object({
   ),
 }).superRefine((data, ctx) => {
     if (data.rentType === 'incremental') {
-        if (data.term1FromMonth === undefined) {
+        if (!data.term1FromMonth) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: "From month is required",
                 path: ["term1FromMonth"],
             });
         }
-        if (data.term1ToMonth === undefined) {
+        if (!data.term1ToMonth) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: "To month is required",
                 path: ["term1ToMonth"],
             });
         }
-        if (data.term1MonthlyRent === undefined) {
+        if (!data.term1MonthlyRent) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: "Monthly rent is required",
@@ -123,63 +124,75 @@ export default function Calculator() {
     if (data.rentType === 'fixed') {
         totalRent = data.rent * data.months;
     } else {
-        // Simple incremental for now with one term.
-        // A more complex implementation could handle multiple terms.
-        if (data.term1ToMonth && data.term1MonthlyRent) {
-            const term1Months = data.term1ToMonth - (data.term1FromMonth ?? 1) + 1;
-            totalRent = term1Months * data.term1MonthlyRent;
-            if (data.months > term1Months) {
-                // Assuming rent for remaining months is the same as fixed rent
-                 totalRent += (data.months - term1Months) * data.rent;
+        if (data.term1FromMonth && data.term1ToMonth && data.term1MonthlyRent) {
+            const term1Duration = data.term1ToMonth - data.term1FromMonth + 1;
+            totalRent = term1Duration * data.term1MonthlyRent;
+            
+            const remainingMonths = data.months - term1Duration;
+            if (remainingMonths > 0) {
+                 // Assuming rent for remaining months increases by 10% from term 1
+                 const subsequentRent = data.term1MonthlyRent * 1.1;
+                 totalRent += remainingMonths * subsequentRent;
             }
         } else {
-            // Fallback to fixed if incremental data is missing
+             // Fallback to fixed if incremental data is incomplete
             totalRent = data.rent * data.months;
         }
     }
 
-    const stampDutyBase = totalRent + (data.refundableDeposit * 0.1);
-    let stampDuty = stampDutyBase * 0.0025;
+    const nonRefundableDeposit = data.nonRefundableDeposit ?? 0;
+    const stampDutyBase = totalRent + (data.refundableDeposit * 0.1) + nonRefundableDeposit;
+    let stampDuty = stampDutyBase * 0.0025; // 0.25% of the base
     stampDuty = Math.max(stampDuty, 100);
 
     const registrationFee = 1000;
     
     const total = stampDuty + registrationFee + 700; // 700 for consultancy & processing
 
-    setCosts({ stampDuty, registrationFee, total });
+    const finalCosts = { stampDuty, registrationFee, total };
+    setCosts(finalCosts);
     setShowResult(true);
 
     const submissionsCollection = collection(firestore, 'calculator_form_submissions');
     const submissionData = {
-      formValues: data,
+      formValues: {
+        months: data.months,
+        rent: data.rent,
+        refundableDeposit: data.refundableDeposit,
+        nonRefundableDeposit: data.nonRefundableDeposit,
+        rentType: data.rentType,
+        mobile: data.mobile,
+        location: data.location,
+        ...(data.rentType === 'incremental' && {
+            term1FromMonth: data.term1FromMonth,
+            term1ToMonth: data.term1ToMonth,
+            term1MonthlyRent: data.term1MonthlyRent,
+        })
+      },
       submissionDate: new Date().toISOString(),
-      calculatedCosts: {
-        stampDuty,
-        registrationFee,
-        total,
-      }
+      calculatedCosts: finalCosts,
     };
     
-    addDoc(submissionsCollection, submissionData)
-      .then(() => {
+    try {
+        await addDoc(submissionsCollection, submissionData);
         toast({
-          title: "Submission successful",
-          description: "Your calculation has been saved.",
+          title: "Calculation Saved",
+          description: "Your submission has been successfully recorded.",
         });
-      })
-      .catch((error) => {
+    } catch (error) {
         console.error("Error adding document: ", error);
-        errorEmitter.emit('permission-error', new FirestorePermissionError({
+        const permissionError = new FirestorePermissionError({
             path: submissionsCollection.path,
             operation: 'create',
             requestResourceData: submissionData,
-        }));
+        });
+        errorEmitter.emit('permission-error', permissionError);
         toast({
           variant: "destructive",
-          title: "Submission failed",
-          description: "There was an error saving your calculation.",
+          title: "Submission Failed",
+          description: "Could not save your calculation. Check permissions.",
         });
-      });
+    }
   };
   
   const handleReset = () => {
@@ -230,7 +243,7 @@ export default function Calculator() {
               {errors.months && <p className="text-destructive text-xs">{errors.months.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="rent">MONTHLY RENT*</Label>
+              <Label htmlFor="rent">MONTHLY RENT (for fixed rent)*</Label>
               <Controller
                 name="rent"
                 control={control}
@@ -262,6 +275,7 @@ export default function Calculator() {
               />
             </div>
              <div className="space-y-2 col-span-1 sm:col-span-2">
+                <Label>Rent Type</Label>
                 <Controller
                     name="rentType"
                     control={control}
@@ -380,3 +394,6 @@ export default function Calculator() {
     </Card>
   );
 }
+
+
+    
