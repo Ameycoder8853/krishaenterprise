@@ -54,14 +54,15 @@ const calculatorSchema = z.object({
     z.number().optional()
   ),
 }).superRefine((data, ctx) => {
-    if (data.rentType === 'fixed' && !data.rent) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Rent is required for fixed rent type",
-        path: ["rent"],
-      });
-    }
-    if (data.rentType === 'incremental') {
+    if (data.rentType === 'fixed') {
+        if (data.rent === undefined || data.rent === null || data.rent <= 0) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Rent is required for fixed rent type",
+                path: ["rent"],
+            });
+        }
+    } else if (data.rentType === 'incremental') {
         if (!data.term1FromMonth) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
@@ -85,6 +86,7 @@ const calculatorSchema = z.object({
         }
     }
 });
+
 
 type CalculatorValues = z.infer<typeof calculatorSchema>;
 
