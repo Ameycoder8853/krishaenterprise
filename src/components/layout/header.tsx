@@ -10,12 +10,12 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/about' },
-  { name: 'Services', href: '/services' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Contact', href: '/contact' },
+    { name: 'About US', href: '/about' },
+    { name: 'How it Works', href: '/#how-it-works' },
+    { name: 'Stamp Duty Calculator', href: '/calculator' },
+    { name: 'Why Choose Us', href: '/#why-choose-us' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
