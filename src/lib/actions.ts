@@ -28,11 +28,12 @@ export async function sendContactEmail(formData: ContactFormData) {
   // sending an email, as we can't send real emails from here.
   
   console.log("--- New Contact Form Submission ---");
+  console.log(`To: amey35195@gmail.com`);
   console.log(`Name: ${formData.name}`);
   console.log(`Email: ${formData.email}`);
   console.log(`Phone: ${formData.phone}`);
   console.log(`Message: ${formData.message}`);
-  console.log("--- Email would be sent to amey35195@gmail.com ---");
+  console.log("------------------------------------");
   
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1000));
