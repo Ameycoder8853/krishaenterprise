@@ -8,6 +8,7 @@ const quickLinks = [
   { name: 'Calculator', href: '/calculator' },
   { name: 'Contact Us', href: '/contact' },
   { name: 'Login', href: '/login' },
+  { name: 'Admin', href: '/admin' },
 ];
 
 export default function Footer() {
