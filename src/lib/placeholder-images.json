@@ -41,6 +41,24 @@
       "description": "A person looking at a target board.",
       "imageUrl": "https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdvYWx8ZW58MHx8fHwxNzYwMzkyNDMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "abstract goal"
+    },
+    {
+      "id": "blog-post-1",
+      "description": "A person reviewing a legal document with a pen.",
+      "imageUrl": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsZWdhbCUyMGRvY3VtZW50fGVufDB8fHx8MTc2MDQ1NTYxMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "legal document"
+    },
+    {
+      "id": "blog-post-2",
+      "description": "A pair of scales of justice on a wooden desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1589254065878-42c9da997008?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsYXclMjBzY2FsZXN8ZW58MHx8fHwxNzYwNDU1NjMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "law scales"
+    },
+    {
+      "id": "blog-post-3",
+      "description": "Two business partners shaking hands over a desk.",
+      "imageUrl": "https://images.unsplash.com/photo-1529400971008-f566de0e6df1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwYXJ0bmVyc2hpcCUyMGhhbmRzaGFrZXxlbnwwfHx8fDE3NjA0NTU2NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "partnership handshake"
     }
   ]
 }

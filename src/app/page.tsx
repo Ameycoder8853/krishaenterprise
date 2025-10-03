@@ -8,15 +8,22 @@ import {
   Star,
   Users,
   Wallet,
+  Calendar,
+  User
 } from 'lucide-react';
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Button } from '@/components/ui/button';
 import {
   Carousel,
@@ -122,6 +129,53 @@ const whyChooseUs = [
         description: "We are committed to providing the best service, with thousands of happy clients."
     }
 ]
+
+const faqs = [
+  {
+    question: "What is a rental agreement?",
+    answer: "A rental agreement is a legal document that binds the owner of a property and a tenant who wants to take temporary possession of the property. It outlines the terms and conditions of the tenancy."
+  },
+  {
+    question: "Is it mandatory to register a rental agreement?",
+    answer: "In India, it is mandatory to register a rental agreement if the tenancy period is for 12 months or more. For shorter periods, it's highly recommended for legal security."
+  },
+  {
+    question: "What documents are required for a rental agreement?",
+    answer: "Typically, you'll need identity proof (like Aadhaar or Passport) and address proof for both the landlord and the tenant, as well as two passport-sized photographs of each."
+  },
+  {
+    question: "How is stamp duty calculated?",
+    answer: "Stamp duty is calculated based on the total rent amount for the tenancy period, the security deposit, and the location (state) of the property. Our calculator provides a detailed estimate."
+  }
+];
+
+const blogPosts = [
+  {
+    title: "Understanding Rental Agreements in India: A Complete Guide",
+    author: "Jane Smith",
+    date: "2024-07-15",
+    excerpt: "Everything you need to know about rental agreements, from key clauses to the registration process...",
+    image: PlaceHolderImages.find(img => img.id === 'blog-post-1'),
+    slug: "/blog/understanding-rental-agreements"
+  },
+  {
+    title: "Notarized vs. Registered Agreement: What's the Difference?",
+    author: "John Doe",
+    date: "2024-07-10",
+    excerpt: "This post breaks down the key differences, pros, and cons of notarized and registered agreements in India.",
+    image: PlaceHolderImages.find(img => img.id === 'blog-post-2'),
+    slug: "/blog/notarized-vs-registered"
+  },
+  {
+    title: "5 Essential Clauses for Your Partnership Deed",
+    author: "Anil Kumar",
+    date: "2024-07-05",
+    excerpt: "Starting a business with a partner? A solid partnership deed is crucial. We cover the 5 must-have clauses...",
+    image: PlaceHolderImages.find(img => img.id === 'blog-post-3'),
+    slug: "/blog/5-clauses-for-partnership-deed"
+  },
+];
+
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-image');
@@ -312,6 +366,86 @@ export default function Home() {
             </Carousel>
           </div>
         </section>
+        
+        <section id="faq" className="py-12 md:py-24 bg-secondary/50">
+          <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+                <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                    Frequently Asked Questions
+                </h2>
+                <p className="mt-4 text-lg text-foreground/80">
+                    Find answers to common questions about our services.
+                </p>
+            </div>
+            <div className="mt-12 max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index + 1}`}>
+                    <AccordionTrigger className="text-left font-semibold text-lg">{faq.question}</AccordionTrigger>
+                    <AccordionContent className="text-base text-foreground/80">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
+
+        <section id="blog" className="py-12 md:py-24">
+            <div className="container px-4 md:px-6">
+                 <div className="mx-auto max-w-2xl text-center">
+                    <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                        From Our Blog
+                    </h2>
+                    <p className="mt-4 text-lg text-foreground/80">
+                        Stay updated with the latest news and insights on legal documentation.
+                    </p>
+                </div>
+                <div className="mt-12 grid gap-8 md:grid-cols-3">
+                   {blogPosts.map((post) => (
+                    <Card key={post.title} className="overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                      <Link href={post.slug} className="block">
+                        <CardHeader className="p-0">
+                          {post.image && <div className="relative h-56 w-full">
+                            <Image
+                              src={post.image.imageUrl}
+                              alt={post.title}
+                              layout="fill"
+                              objectFit="cover"
+                              data-ai-hint={post.image.imageHint}
+                            />
+                          </div>}
+                        </CardHeader>
+                        <CardContent className="p-6">
+                           <div className="flex items-center text-sm text-muted-foreground mb-3 space-x-4">
+                                <div className="flex items-center">
+                                <User className="h-4 w-4 mr-1.5" />
+                                {post.author}
+                                </div>
+                                <div className="flex items-center">
+                                <Calendar className="h-4 w-4 mr-1.5" />
+                                {post.date}
+                                </div>
+                            </div>
+                          <h3 className="font-headline text-xl font-semibold mb-2">{post.title}</h3>
+                          <p className="text-foreground/80 mb-4 text-sm">{post.excerpt}</p>
+                           <Button variant="link" className="p-0 font-bold text-primary text-sm">
+                                Read More <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        </CardContent>
+                      </Link>
+                    </Card>
+                  ))}
+                </div>
+                <div className="text-center mt-12">
+                    <Button asChild size="lg">
+                         <Link href="/blog">View All Posts</Link>
+                    </Button>
+                </div>
+            </div>
+        </section>
+
       </main>
       <Footer />
     </div>
