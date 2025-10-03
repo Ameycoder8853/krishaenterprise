@@ -36,10 +36,10 @@ export function ContactPopup() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            const hasSeenPopup = sessionStorage.getItem("hasSeenContactPopup");
+            const hasSeenPopup = localStorage.getItem("hasSeenContactPopup");
             if (!hasSeenPopup) {
                 setIsOpen(true);
-                sessionStorage.setItem("hasSeenContactPopup", "true");
+                localStorage.setItem("hasSeenContactPopup", "true");
             }
         }, 2000); // Popup appears after 2 seconds
 
@@ -71,7 +71,7 @@ export function ContactPopup() {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogContent className="sm:max-w-md p-0 bg-[#FBB040] text-black border-none font-serif">
-                <DialogTitle className="sr-only">Inquiry Form</DialogTitle>
+                 <DialogTitle className="sr-only">Inquiry Form</DialogTitle>
                 <DialogDescription className="sr-only">Submit an inquiry to Book My Agreement. Fill in your name, email, phone, and message.</DialogDescription>
                 <div className="relative p-8 text-center">
                     <Button variant="ghost" className="absolute top-2 right-2 h-auto w-auto p-1 text-black hover:bg-black/10" onClick={handleClose}>
