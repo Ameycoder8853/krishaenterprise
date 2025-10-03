@@ -11,9 +11,10 @@ import { Logo } from '@/components/logo';
 
 const navLinks = [
   { name: 'Home', href: '/' },
+  { name: 'About Us', href: '/about' },
   { name: 'Services', href: '/services' },
-  { name: 'Calculator', href: '/calculator' },
-  { name: 'AI Summarizer', href: '/dashboard/summarize' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -81,11 +82,11 @@ export default function Header() {
             </div>
         </div>
 
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-2">
           <Button variant="ghost" asChild>
             <Link href="/login">Login</Link>
           </Button>
-          <Button asChild style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} className="hover:opacity-90">
+          <Button asChild style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
             <Link href="/register">Register</Link>
           </Button>
         </div>

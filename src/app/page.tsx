@@ -4,7 +4,8 @@ import {
   ArrowRight,
   FileText,
   Landmark,
-  Sparkles,
+  ShieldCheck,
+  Star,
   Users,
   Wallet,
 } from 'lucide-react';
@@ -28,7 +29,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
-import Calculator from '@/components/calculator';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const services = [
@@ -59,26 +59,26 @@ const services = [
 ];
 
 const howItWorksSteps = [
-  {
-    step: 1,
-    title: 'Fill in Details',
-    description: 'Provide the necessary information through our guided forms.',
-  },
-  {
-    step: 2,
-    title: 'Upload Documents',
-    description: 'Securely upload required documents for verification.',
-  },
-  {
-    step: 3,
-    title: 'Digital Signature',
-    description: 'Sign your agreement electronically with ease and security.',
-  },
-  {
-    step: 4,
-    title: 'Receive Your Document',
-    description: 'Get your legally binding agreement delivered instantly.',
-  },
+    {
+        step: 1,
+        title: "Select Service & Fill Details",
+        description: "Choose the agreement you need and fill in our simple, guided form with all the necessary details.",
+    },
+    {
+        step: 2,
+        title: "Review & Pay Online",
+        description: "Review the draft of your agreement. Once satisfied, make a secure online payment to proceed.",
+    },
+    {
+        step: 3,
+        title: "Stamp Paper & E-Sign",
+        description: "We print the draft on a government-approved stamp paper and send it for electronic or physical signatures.",
+    },
+    {
+        step: 4,
+        title: "Agreement Delivered",
+        description: "Your fully executed, legally binding agreement is delivered to your doorstep or email.",
+    },
 ];
 
 const testimonials = [
@@ -87,23 +87,41 @@ const testimonials = [
     title: 'Startup Founder',
     avatar: PlaceHolderImages[1],
     quote:
-      'Krisha Enterprise made our rental agreement process incredibly simple. The AI summary was a fantastic bonus, helping us understand the jargon.',
+      'Krisha Enterprise made our rental agreement process incredibly simple. Their team was responsive and the turnaround was super fast!',
   },
   {
     name: 'Priya Mehta',
     title: 'Landlord',
     avatar: PlaceHolderImages[2],
     quote:
-      'The calculator was spot on! I could estimate all costs upfront. The entire service is transparent and user-friendly. Highly recommended.',
+      'The pricing calculator was spot on! I could estimate all costs upfront. The entire service is transparent and user-friendly. Highly recommended.',
   },
   {
     name: 'Anil Kumar',
     title: 'Small Business Owner',
     avatar: PlaceHolderImages[3],
     quote:
-      "Creating a partnership deed was daunting, but this platform guided me through every step. A professional and reliable service.",
+      "Creating a partnership deed was daunting, but Krisha Enterprise guided me through every step. A professional and reliable service.",
   },
 ];
+
+const whyChooseUs = [
+    {
+        icon: ShieldCheck,
+        title: "Government Approved",
+        description: "All our agreements are legally sound and compliant with the latest government regulations."
+    },
+    {
+        icon: Users,
+        title: "Expert Assistance",
+        description: "Our legal experts are available to guide you at every step of the process."
+    },
+    {
+        icon: Star,
+        title: "Customer Satisfaction",
+        description: "We are committed to providing the best service, with thousands of happy clients."
+    }
+]
 
 export default function Home() {
   const heroImage = PlaceHolderImages[0];
@@ -112,7 +130,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <section className="relative h-[60vh] md:h-[70vh]">
+        <section className="relative h-[80vh] md:h-[90vh]">
           <Image
             src={heroImage.imageUrl}
             alt={heroImage.description}
@@ -121,42 +139,40 @@ export default function Home() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-background/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
             <div className="container px-4 md:px-6">
               <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                Legal Agreements, Simplified
+                Online Rent Agreement & Legal Documents
               </h1>
               <p className="mx-auto mt-4 max-w-[700px] text-lg text-foreground/80 md:text-xl">
-                Create, customize, and execute legally binding agreements with
-                confidence. Fast, secure, and user-friendly.
+                India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} className="hover:opacity-90">
-                  <Link href="/services">Create Agreement</Link>
+                <Button asChild size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
+                  <Link href="/services">Get Started Now</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/calculator">Estimate Costs</Link>
+                <Button asChild size="lg" variant="outline" className="bg-background/80">
+                  <Link href="/pricing">View Pricing</Link>
                 </Button>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="services" className="py-12 md:py-24">
+        <section id="services" className="py-12 md:py-24 bg-secondary/50">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
                 Our Services
               </h2>
               <p className="mt-4 text-lg text-foreground/80">
-                We offer a wide range of legal document services to meet your
-                needs.
+                We offer a wide range of legal document services to meet your needs, from rental agreements to business contracts.
               </p>
             </div>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {services.map((service) => (
-                <Card key={service.title} className="group transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <Card key={service.title} className="group transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                   <CardHeader>
                     <div className="mb-4 flex justify-center">
                       <div className="rounded-full bg-primary/10 p-4 text-primary">
@@ -168,44 +184,73 @@ export default function Home() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-center text-foreground/80">
+                    <p className="text-center text-sm text-foreground/80 min-h-[40px]">
                       {service.description}
                     </p>
-                    <Button asChild variant="link" className="mt-4 w-full">
+                    <Button asChild variant="link" className="mt-4 w-full font-bold text-primary">
                       <Link href={service.link}>
-                        Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                        Create Now <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
                   </CardContent>
                 </Card>
               ))}
             </div>
+             <div className="text-center mt-12">
+                <Button asChild size="lg" variant="outline">
+                    <Link href="/services">View All Services</Link>
+                </Button>
+            </div>
           </div>
         </section>
+        
+        <section id="why-choose-us" className="py-12 md:py-24">
+            <div className="container px-4 md:px-6">
+                 <div className="mx-auto max-w-2xl text-center">
+                    <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                        Why Choose Us?
+                    </h2>
+                    <p className="mt-4 text-lg text-foreground/80">
+                        We are dedicated to making legal documentation simple, transparent, and accessible for everyone.
+                    </p>
+                </div>
+                <div className="mt-12 grid gap-8 md:grid-cols-3">
+                    {whyChooseUs.map((feature) => (
+                        <div key={feature.title} className="text-center">
+                             <div className="inline-block rounded-full bg-primary/10 p-4 text-primary mb-4">
+                                <feature.icon className="h-10 w-10" />
+                            </div>
+                            <h3 className="font-headline text-xl font-semibold">{feature.title}</h3>
+                            <p className="mt-2 text-foreground/80">{feature.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
 
-        <section id="how-it-works" className="bg-primary/5 py-12 md:py-24">
+        <section id="how-it-works" className="bg-secondary/50 py-12 md:py-24">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
                 How It Works
               </h2>
               <p className="mt-4 text-lg text-foreground/80">
-                Get your agreement in 4 simple steps.
+                Get your agreement ready in 4 simple and straightforward steps.
               </p>
             </div>
-            <div className="relative mt-12">
-              <div className="absolute left-1/2 top-10 hidden h-full w-0.5 -translate-x-1/2 bg-border md:block"></div>
-              <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative mt-16">
+              <div className="absolute left-0 right-0 top-5 mx-auto h-0.5 w-4/5 bg-border hidden md:block"></div>
+              <div className="grid gap-12 md:grid-cols-4 text-center">
                 {howItWorksSteps.map((step, index) => (
-                  <div key={step.step} className="flex items-start gap-6">
-                    <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                      <span className="font-bold">{step.step}</span>
+                  <div key={step.step} className="relative flex flex-col items-center gap-4">
+                    <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground border-4 border-background">
+                      <span className="font-bold text-lg">{step.step}</span>
                     </div>
-                    <div>
-                      <h3 className="font-headline text-xl font-semibold">
+                    <div className="mt-2">
+                      <h3 className="font-headline text-lg font-semibold">
                         {step.title}
                       </h3>
-                      <p className="mt-2 text-foreground/80">
+                      <p className="mt-2 text-sm text-foreground/80">
                         {step.description}
                       </p>
                     </div>
@@ -216,89 +261,33 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="calculator" className="py-12 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="space-y-4">
-                <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-                  Agreement Cost Calculator
-                </h2>
-                <p className="text-lg text-foreground/80">
-                  Get an instant estimate for your agreement costs, including
-                  stamp duty and registration fees. No hidden charges.
-                </p>
-                <Button asChild style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} className="hover:opacity-90">
-                  <Link href="/calculator">
-                    Go to Full Calculator <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-              <Calculator />
-            </div>
-          </div>
-        </section>
-
-        <section id="ai-summary" className="bg-primary/5 py-12 md:py-24">
-          <div className="container px-4 md:px-6">
-            <Card className="overflow-hidden lg:grid lg:grid-cols-2">
-              <div className="flex flex-col justify-center p-8 md:p-12">
-                <Sparkles className="h-10 w-10 text-accent" />
-                <h2 className="mt-4 font-headline text-3xl font-bold tracking-tight">
-                  Understand Your Agreements with AI
-                </h2>
-                <p className="mt-4 text-lg text-foreground/80">
-                  Tired of complex legal jargon? Our cutting-edge AI tool
-                  summarizes your agreements into simple, easy-to-understand
-                  language, ensuring you know exactly what you&apos;re signing.
-                </p>
-                <div className="mt-6">
-                  <Button asChild size="lg" variant="outline">
-                    <Link href="/dashboard/summarize">
-                      Try AI Summarizer
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="relative hidden aspect-square lg:block">
-                 <Image
-                    src={PlaceHolderImages[4].imageUrl}
-                    alt={PlaceHolderImages[4].description}
-                    data-ai-hint={PlaceHolderImages[4].imageHint}
-                    fill
-                    className="object-cover"
-                  />
-              </div>
-            </Card>
-          </div>
-        </section>
-
         <section id="testimonials" className="py-12 md:py-24">
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-                Trusted by Professionals
+                Trusted by Thousands
               </h2>
               <p className="mt-4 text-lg text-foreground/80">
-                Hear what our clients have to say about their experience.
+                Hear what our clients have to say about their experience with Krisha Enterprise.
               </p>
             </div>
             <Carousel
               opts={{
                 align: 'start',
               }}
-              className="mx-auto mt-12 w-full max-w-4xl"
+              className="mx-auto mt-12 w-full max-w-5xl"
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2">
-                    <div className="p-1">
-                      <Card className="h-full">
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-2">
+                      <Card className="h-full transform transition-all duration-300 hover:shadow-lg">
                         <CardContent className="flex h-full flex-col justify-between p-6">
-                           <blockquote className="text-lg italic text-foreground/90">
+                           <blockquote className="text-base text-foreground/90 mb-4">
                             &ldquo;{testimonial.quote}&rdquo;
                           </blockquote>
-                          <div className="mt-6 flex items-center gap-4">
-                            <Avatar>
+                          <div className="mt-auto flex items-center gap-4">
+                            <Avatar className="h-12 w-12">
                               <AvatarImage
                                 src={testimonial.avatar.imageUrl}
                                 alt={testimonial.avatar.description}
@@ -321,8 +310,8 @@ export default function Home() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious className="left-[-50px]"/>
+              <CarouselNext className="right-[-50px]"/>
             </Carousel>
           </div>
         </section>
