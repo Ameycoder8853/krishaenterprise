@@ -112,9 +112,6 @@ export default function Header() {
             <>
               {user ? (
                 <>
-                  <Button variant="ghost" asChild>
-                    <Link href="/dashboard">Dashboard</Link>
-                  </Button>
                   <Button onClick={handleLogout} style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
