@@ -29,24 +29,24 @@ export default function ContactPage() {
                 <CardDescription>Fill out the form and our team will respond within 24 hours.</CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                <form className="space-y-4" action="mailto:amey35195@gmail.com" method="post" encType="text/plain">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="name">Name</Label>
-                      <Input id="name" placeholder="Your Name" />
+                      <Input id="name" name="name" placeholder="Your Name" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="your@email.com" />
+                      <Input id="email" name="email" type="email" placeholder="your@email.com" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" placeholder="Subject of your message" />
+                    <Input id="subject" name="subject" placeholder="Subject of your message" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
-                    <Textarea id="message" placeholder="Your message..." className="min-h-[120px]" />
+                    <Textarea id="message" name="message" placeholder="Your message..." className="min-h-[120px]" />
                   </div>
                   <Button type="submit" className="w-full" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }}>Send Message</Button>
                 </form>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                     <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold">Address</h3>
-                      <p className="text-foreground/80">123 Business Avenue, Mumbai, Maharashtra, 400001</p>
+                      <p className="text-foreground/80">Dev Krupa society , shop number 1 , Ground floor , V n marg ,  Ghatkopar East Mumbai , Maharashtra , 400077</p>
                     </div>
                   </div>
                 </CardContent>
