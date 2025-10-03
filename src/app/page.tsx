@@ -13,8 +13,6 @@ import {
   MapPin,
   Building2,
   Phone,
-  User,
-  Calendar,
 } from 'lucide-react';
 
 import {
@@ -189,9 +187,7 @@ export default function Home() {
           <div className="relative z-10 container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-white">
-                <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                  ONLINE RENT AGREEMENT
-                </h1>
+                
                 <p className="mt-4 max-w-[600px] text-lg text-white/90 md:text-xl">
                   India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
                 </p>
@@ -201,7 +197,7 @@ export default function Home() {
                         {ctaFeatures.map((feature, index) => (
                             <div key={feature.title} className="flex flex-col items-center text-center gap-2 relative">
                                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                                    <feature.icon className="h-8 w-8 text-accent" />
+                                    <feature.icon className="h-8 w-8 text-white" />
                                 </div>
                                 <p className="font-semibold uppercase tracking-wider text-sm">{feature.title}</p>
                             </div>
@@ -209,10 +205,10 @@ export default function Home() {
                     </div>
                     <h2 className="font-headline text-2xl font-bold tracking-tight sm:text-3xl text-center">NO GOVERNMENT OFFICE VISITS!</h2>
                     <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                         <Button asChild size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground w-full sm:w-auto">
+                         <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
                             <Link href="/services">Create Agreement</Link>
                         </Button>
-                         <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
+                         <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
                             <a href="tel:+919833799289">
                                 <Phone className="mr-2 h-5 w-5"/>
                                 +91 9833 799 289
@@ -415,5 +411,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
