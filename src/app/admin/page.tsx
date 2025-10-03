@@ -1,16 +1,21 @@
 
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useCollection, useFirestore, useMemoFirebase } from "@/firebase";
+import { useCollection, useFirestore, useMemoFirebase, useUser } from "@/firebase";
 import { collection } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AdminPage() {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
   const firestore = useFirestore();
+
   const submissionsCollection = useMemoFirebase(() => {
     if (!firestore) return null;
     return collection(firestore, 'calculator_form_submissions');
@@ -18,6 +23,22 @@ export default function AdminPage() {
 
   const { data: submissions, isLoading } = useCollection(submissionsCollection);
 
+  useEffect(() => {
+    if (!isUserLoading) {
+      if (!user || user.email !== "admin@gmail.com") {
+        router.push("/login");
+      }
+    }
+  }, [user, isUserLoading, router]);
+
+  if (isUserLoading || !user || user.email !== "admin@gmail.com") {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <p>Loading and verifying access...</p>
+      </div>
+    );
+  }
+  
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -97,6 +118,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-
-    
