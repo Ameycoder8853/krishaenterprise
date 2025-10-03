@@ -174,21 +174,20 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <section className="relative h-auto py-20 md:py-24 lg:py-32">
+        <section className="relative h-auto py-16 md:py-20 lg:py-28">
           {heroImage && <Image
             src={heroImage.imageUrl}
             alt={heroImage.description}
             data-ai-hint={heroImage.imageHint}
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />}
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative z-10 container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-white">
-
-                <div className="mt-10 text-white">
+                 <div className="text-white">
                     <div className="grid sm:grid-cols-3 gap-6 items-center mb-8">
                         {ctaFeatures.map((feature, index) => (
                             <div key={feature.title} className="flex flex-col items-center text-center gap-2 relative">
@@ -212,7 +211,6 @@ export default function Home() {
                         </Button>
                     </div>
                 </div>
-
               </div>
                <div className="bg-background/90 backdrop-blur-sm rounded-lg">
                 <Calculator />
