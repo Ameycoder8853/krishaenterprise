@@ -1,7 +1,10 @@
 
 
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import {
   ArrowRight,
   FileText,
@@ -172,11 +175,44 @@ const faqs = [
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-image');
 
+  const animatedSections = useRef<Array<HTMLElement | null>>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+            entry.target.classList.remove('opacity-0');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    animatedSections.current.forEach((section) => {
+      if (section) {
+        observer.observe(section);
+      }
+    });
+
+    return () => {
+      animatedSections.current.forEach((section) => {
+        if (section) {
+          observer.unobserve(section);
+        }
+      });
+    };
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <section className="relative h-auto py-16 md:py-20 lg:py-28">
+        <section className="relative h-auto py-16 md:py-20 lg:py-28 pt-24 md:pt-28 lg:pt-36">
           {heroImage && <Image
             src={heroImage.imageUrl}
             alt={heroImage.description}
@@ -219,7 +255,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="services" className="py-12 md:py-24 bg-secondary/50">
+        <section id="services" className="py-12 md:py-24 bg-secondary/50 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -263,7 +299,7 @@ export default function Home() {
           </div>
         </section>
         
-        <section id="why-choose-us" className="py-12 md:py-24">
+        <section id="why-choose-us" className="py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
             <div className="container px-4 md:px-6">
                  <div className="mx-auto max-w-2xl text-center">
                     <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -287,7 +323,7 @@ export default function Home() {
             </div>
         </section>
 
-        <section id="how-it-works" className="bg-secondary/50 py-12 md:py-24">
+        <section id="how-it-works" className="bg-secondary/50 py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -320,7 +356,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="testimonials" className="py-12 md:py-24">
+        <section id="testimonials" className="py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -375,7 +411,7 @@ export default function Home() {
           </div>
         </section>
         
-        <section id="faq" className="py-12 md:py-24 bg-secondary/50">
+        <section id="faq" className="py-12 md:py-24 bg-secondary/50 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
                 <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -400,7 +436,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="py-12 md:py-24">
+        <section id="contact" className="py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
