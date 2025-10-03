@@ -10,6 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from './ui/separator';
+import { useFirestore } from '@/firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
 
 const calculatorSchema = z.object({
   months: z.number().min(1, 'Months required').max(60, 'Maximum 60 months'),
@@ -30,13 +33,15 @@ export default function Calculator() {
     total: 0,
   });
   const [showResult, setShowResult] = useState(false);
+  const firestore = useFirestore();
+  const { toast } = useToast();
 
   const { control, handleSubmit, reset, formState: { errors } } = useForm<CalculatorValues>({
     resolver: zodResolver(calculatorSchema),
     defaultValues: {
-      months: 11,
-      rent: 25000,
-      refundableDeposit: 100000,
+      months: undefined,
+      rent: undefined,
+      refundableDeposit: undefined,
       nonRefundableDeposit: 0,
       rentType: 'fixed',
       mobile: '',
@@ -44,7 +49,7 @@ export default function Calculator() {
     },
   });
 
-  const onSubmit = (data: CalculatorValues) => {
+  const onSubmit = async (data: CalculatorValues) => {
     const totalRent = data.rent * data.months;
     const stampDutyBase = totalRent + (data.refundableDeposit * 0.1);
     let stampDuty = stampDutyBase * 0.0025;
@@ -56,10 +61,42 @@ export default function Calculator() {
 
     setCosts({ stampDuty, registrationFee, total });
     setShowResult(true);
+
+    try {
+      const submissionData = {
+        ...data,
+        submissionDate: new Date().toISOString(),
+        calculatedCosts: {
+          stampDuty,
+          registrationFee,
+          total,
+        }
+      };
+      await addDoc(collection(firestore, 'calculator_form_submissions'), submissionData);
+      toast({
+        title: "Submission successful",
+        description: "Your calculation has been saved.",
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast({
+        variant: "destructive",
+        title: "Submission failed",
+        description: "There was an error saving your calculation.",
+      });
+    }
   };
   
   const handleReset = () => {
-    reset();
+    reset({
+      months: undefined,
+      rent: undefined,
+      refundableDeposit: undefined,
+      nonRefundableDeposit: 0,
+      rentType: 'fixed',
+      mobile: '',
+      location: '',
+    });
     setShowResult(false);
     setCosts({ stampDuty: 0, registrationFee: 0, total: 0 });
   }
@@ -89,7 +126,7 @@ export default function Calculator() {
                 name="months"
                 control={control}
                 render={({ field }) => (
-                  <Input id="months" type="number" placeholder="Maximum 60" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || 0)} />
+                  <Input id="months" type="number" placeholder="Maximum 60" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || undefined)} />
                 )}
               />
               {errors.months && <p className="text-destructive text-xs">{errors.months.message}</p>}
@@ -100,7 +137,7 @@ export default function Calculator() {
                 name="rent"
                 control={control}
                 render={({ field }) => (
-                  <Input id="rent" type="number" placeholder="Monthly Rent" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || 0)} />
+                  <Input id="rent" type="number" placeholder="Monthly Rent" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || undefined)} />
                 )}
               />
                {errors.rent && <p className="text-destructive text-xs">{errors.rent.message}</p>}
@@ -111,13 +148,13 @@ export default function Calculator() {
                 name="refundableDeposit"
                 control={control}
                 render={({ field }) => (
-                  <Input id="refundableDeposit" type="number" placeholder="Refundable Security Deposit" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || 0)} />
+                  <Input id="refundableDeposit" type="number" placeholder="Refundable Security Deposit" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10) || undefined)} />
                 )}
               />
                {errors.refundableDeposit && <p className="text-destructive text-xs">{errors.refundableDeposit.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="nonRefundableDeposit">NON REFUNDABLE SECURITY DEPOSIT*</Label>
+              <Label htmlFor="nonRefundableDeposit">NON REFUNDABLE SECURITY DEPOSIT</Label>
               <Controller
                 name="nonRefundableDeposit"
                 control={control}
