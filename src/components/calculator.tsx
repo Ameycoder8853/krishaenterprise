@@ -119,7 +119,25 @@ export default function Calculator() {
       return;
     }
 
-    const totalRent = data.rent * data.months;
+    let totalRent = 0;
+    if (data.rentType === 'fixed') {
+        totalRent = data.rent * data.months;
+    } else {
+        // Simple incremental for now with one term.
+        // A more complex implementation could handle multiple terms.
+        if (data.term1ToMonth && data.term1MonthlyRent) {
+            const term1Months = data.term1ToMonth - (data.term1FromMonth ?? 1) + 1;
+            totalRent = term1Months * data.term1MonthlyRent;
+            if (data.months > term1Months) {
+                // Assuming rent for remaining months is the same as fixed rent
+                 totalRent += (data.months - term1Months) * data.rent;
+            }
+        } else {
+            // Fallback to fixed if incremental data is missing
+            totalRent = data.rent * data.months;
+        }
+    }
+
     const stampDutyBase = totalRent + (data.refundableDeposit * 0.1);
     let stampDuty = stampDutyBase * 0.0025;
     stampDuty = Math.max(stampDuty, 100);
