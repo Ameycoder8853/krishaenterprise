@@ -1,0 +1,170 @@
+/**
+ * @fileoverview Firestore Security Rules for Krisha Enterprise Platform
+ *
+ * Core Philosophy:
+ * This ruleset enforces a strict user-ownership model for user profiles, agreements, and documents stored
+ * under user-specific paths. Calculator form submissions are restricted to admin access only.
+ * Admin access is granted by checking for the existence of a document in the `/roles_admin/{userId}` collection.
+ *
+ * Data Structure:
+ * - /users/{userId}: User profiles.
+ * - /users/{userId}/agreements/{agreementId}: Agreements created by users.
+ * - /users/{userId}/documents/{documentId}: Documents uploaded by users.
+ * - /calculator_form_submissions/{submissionId}: Calculator form submissions (admin-only).
+ * - /roles_admin/{userId}: Admin role assignments.
+ *
+ * Key Security Decisions:
+ * - User data is private and accessible only to the owning user and admins.
+ * - Calculator form submissions are only accessible to admins.
+ * - Listing of documents and agreements is allowed only for the owning user.
+ * - Admin roles are granted by the existence of a document in `/roles_admin/{userId}`.
+ *
+ * Denormalization for Authorization:
+ * - Admin status is determined by the existence of a document in `/roles_admin/{userId}`, avoiding the need for custom claims or external lookups.
+ *
+ * Structural Segregation:
+ * - User-owned data is stored in per-user subcollections to ensure a homogeneous security posture and simplify rules.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Secure user profiles. Only the user or an admin can read/write.
+     * @path /users/{userId}
+     * @allow (get, create, update, delete, list) if the user is signed in and owns the profile or is an admin.
+     * @deny (get, create, update, delete, list) if the user is not signed in.
+     * @deny (get, create, update, delete, list) if the user is signed in but does not own the profile and is not an admin.
+     * @principle Enforces document ownership and admin override for user profiles.
+     */
+    match /users/{userId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isSignedIn() && (isExistingOwner(userId) || isAdmin()) && request.resource.data.id == resource.data.id;
+      allow delete: if isSignedIn() && (isExistingOwner(userId) || isAdmin());
+    }
+
+    /**
+     * @description Secure agreements created by users. Path-based ownership, ensuring only the user or an admin can access.
+     * @path /users/{userId}/agreements/{agreementId}
+     * @allow (get, create, update, delete, list) if the user is signed in and owns the agreement or is an admin.
+     * @deny (get, create, update, delete, list) if the user is not signed in.
+     * @deny (get, create, update, delete, list) if the user is signed in but does not own the agreement and is not an admin.
+     * @principle Enforces document ownership and admin override for agreements.
+     */
+    match /users/{userId}/agreements/{agreementId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow list: if isSignedIn() && isOwner(userId);
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && (isExistingOwner(userId) || isAdmin());
+      allow delete: if isSignedIn() && (isExistingOwner(userId) || isAdmin());
+    }
+
+    /**
+     * @description Secure documents uploaded by users. Path-based ownership for simplified rules.
+     * @path /users/{userId}/documents/{documentId}
+     * @allow (get, create, update, delete, list) if the user is signed in and owns the document or is an admin.
+     * @deny (get, create, update, delete, list) if the user is not signed in.
+     * @deny (get, create, update, delete, list) if the user is signed in but does not own the document and is not an admin.
+     * @principle Enforces document ownership and admin override for documents.
+     */
+    match /users/{userId}/documents/{documentId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      function isExistingOwner(userId) {
+        return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow list: if isSignedIn() && isOwner(userId);
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && (isExistingOwner(userId) || isAdmin());
+      allow delete: if isSignedIn() && (isExistingOwner(userId) || isAdmin());
+    }
+
+    /**
+     * @description Secure calculator form submissions, accessible only to admins.
+     * @path /calculator_form_submissions/{submissionId}
+     * @allow (get, create, update, delete, list) if the user is an admin.
+     * @deny (get, create, update, delete, list) if the user is not an admin.
+     * @principle Restricts access to calculator form submissions to admins only.
+     */
+    match /calculator_form_submissions/{submissionId} {
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Collection to store admin roles. Existence of a document grants admin access.
+     * @path /roles_admin/{userId}
+     * @allow (create) if the user ID matches the request auth UID.
+     * @deny (get, update, delete, list) all requests.
+     * @principle Controls admin role assignment based on document existence.
+     */
+    match /roles_admin/{userId} {
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      function isOwner(userId) {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if false;
+      allow list: if false;
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}

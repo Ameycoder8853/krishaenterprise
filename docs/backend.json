@@ -1,0 +1,282 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Krisha Enterprise platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number of the user."
+        },
+        "registrationDate": {
+          "type": "string",
+          "description": "Date and time the user registered.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "phone",
+        "registrationDate"
+      ]
+    },
+    "Agreement": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Agreement",
+      "type": "object",
+      "description": "Represents a legal agreement created by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the agreement."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Agreement)"
+        },
+        "agreementType": {
+          "type": "string",
+          "description": "Type of agreement (e.g., Rental, Sale)."
+        },
+        "creationDate": {
+          "type": "string",
+          "description": "Date and time the agreement was created.",
+          "format": "date-time"
+        },
+        "agreementDetails": {
+          "type": "string",
+          "description": "JSON blob containing specific details for the agreement type."
+        },
+        "digitalSignatureId": {
+          "type": "string",
+          "description": "Reference to DigitalSignature. (Relationship: Agreement 1:1 DigitalSignature)"
+        },
+        "documentId": {
+          "type": "string",
+          "description": "Reference to Document. (Relationship: Agreement 1:1 Document)"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "agreementType",
+        "creationDate",
+        "agreementDetails"
+      ]
+    },
+    "CalculatorFormSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CalculatorFormSubmission",
+      "type": "object",
+      "description": "Represents data submitted through the agreement calculator form.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the form submission."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time the form was submitted.",
+          "format": "date-time"
+        },
+        "formValues": {
+          "type": "string",
+          "description": "JSON blob containing all form values submitted by the user."
+        }
+      },
+      "required": [
+        "id",
+        "submissionDate",
+        "formValues"
+      ]
+    },
+    "Document": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Document",
+      "type": "object",
+      "description": "Represents a document uploaded by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the document."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Document)"
+        },
+        "uploadDate": {
+          "type": "string",
+          "description": "Date and time the document was uploaded.",
+          "format": "date-time"
+        },
+        "fileLocation": {
+          "type": "string",
+          "description": "Path or URI to the stored document file."
+        },
+        "originalFileName": {
+          "type": "string",
+          "description": "Original file name of the uploaded document."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "uploadDate",
+        "fileLocation",
+        "originalFileName"
+      ]
+    },
+    "DigitalSignature": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "DigitalSignature",
+      "type": "object",
+      "description": "Represents a digital signature associated with an agreement.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the digital signature."
+        },
+        "signatureDate": {
+          "type": "string",
+          "description": "Date and time the agreement was signed.",
+          "format": "date-time"
+        },
+        "signatureProvider": {
+          "type": "string",
+          "description": "Name of the digital signature provider used."
+        },
+        "signatureData": {
+          "type": "string",
+          "description": "Digital signature data."
+        }
+      },
+      "required": [
+        "id",
+        "signatureDate",
+        "signatureProvider",
+        "signatureData"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. Path-based ownership. Only the user or an admin can read/write.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/agreements/{agreementId}",
+        "definition": {
+          "entityName": "Agreement",
+          "schema": {
+            "$ref": "#/backend/entities/Agreement"
+          },
+          "description": "Stores agreements created by users. Path-based ownership, ensuring only the user or an admin can access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "agreementId",
+              "description": "The unique identifier for the agreement."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/documents/{documentId}",
+        "definition": {
+          "entityName": "Document",
+          "schema": {
+            "$ref": "#/backend/entities/Document"
+          },
+          "description": "Stores documents uploaded by users. Path-based ownership for simplified rules.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "documentId",
+              "description": "The unique identifier for the document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/calculator_form_submissions/{submissionId}",
+        "definition": {
+          "entityName": "CalculatorFormSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/CalculatorFormSubmission"
+          },
+          "description": "Stores calculator form submissions, accessible only to admins.",
+          "params": [
+            {
+              "name": "submissionId",
+              "description": "The unique identifier for the form submission."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "roles_admin",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Collection to store admin roles. Existence of a document grants admin access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the Krisha Enterprise application, focusing on user management, agreement creation, document handling, and calculator form submissions. The primary goal is to ensure data security and scalability while adhering to the principles of Authorization Independence and Structural Segregation. Authorization Independence is achieved through path-based ownership and denormalization where applicable. Structural Segregation is used by separating user-owned data into per-user subcollections, ensuring each collection has a homogeneous security posture.\n\n*   `/users/{userId}`: Stores user profiles. This is a path-based ownership model, ensuring only the user or an admin can access their profile data.\n*   `/users/{userId}/agreements/{agreementId}`: Stores agreements created by users. This follows the path-based ownership, providing clear ownership and simplified security rules. No denormalization is required as access is inherently tied to the user.\n*   `/users/{userId}/documents/{documentId}`: Stores documents uploaded by users.  Again, a direct path-based ownership model is applied.\n*   `/calculator_form_submissions/{submissionId}`: Stores calculator form submissions.  This collection is intended to be read by admins. QAPs are satisfied by storing these in a top-level collection, accessible only to admin roles. All documents within this collection have the same security requirements, ensuring homogeneous security posture. Admin access is controlled via the `roles_admin` collection.\n*   `/roles_admin/{userId}`: Used to manage admin roles.  Existence of a document grants admin access. QAPs are satisfied by existence checks, avoiding filtering.\n\nThis structure avoids `get()` calls in security rules, enabling atomic operations and simplifying debugging. All list operations are secured by collection-level rules and structural segregation."
+  }
+}
