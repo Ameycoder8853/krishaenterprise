@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,6 +71,8 @@ export function ContactPopup() {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogContent className="sm:max-w-md p-0 bg-[#FBB040] text-black border-none font-serif">
+                <DialogTitle className="sr-only">Inquiry Form</DialogTitle>
+                <DialogDescription className="sr-only">Submit an inquiry to Book My Agreement. Fill in your name, email, phone, and message.</DialogDescription>
                 <div className="relative p-8 text-center">
                     <Button variant="ghost" className="absolute top-2 right-2 h-auto w-auto p-1 text-black hover:bg-black/10" onClick={handleClose}>
                         <X className="h-6 w-6" />
