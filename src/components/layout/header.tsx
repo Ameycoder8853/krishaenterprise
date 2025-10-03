@@ -8,7 +8,7 @@ import { signOut } from 'firebase/auth';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
 import { useUser, useAuth } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
@@ -53,7 +53,7 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Logo className="h-8 w-8" />
+            <Logo className="h-10 w-10" />
             <span className="hidden font-bold sm:inline-block font-headline">Krisha Enterprise</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -82,6 +82,12 @@ export default function Header() {
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="flex flex-col">
+                    <SheetHeader>
+                      <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                      <SheetDescription className="sr-only">
+                        Navigation links for Krisha Enterprise, including pages like About Us, How it Works, and Contact.
+                      </SheetDescription>
+                    </SheetHeader>
                     <Link href="/" className="flex items-center space-x-2 mb-4">
                         <Logo className="h-8 w-8" />
                         <span className="font-bold font-headline">Krisha Enterprise</span>
