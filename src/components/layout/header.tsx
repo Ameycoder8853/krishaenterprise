@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from '../ui/separator';
 
 const navLinks = [
-    { name: 'About US', href: '/about' },
+    { name: 'About Us', href: '/about/' },
     { name: 'How it Works', href: '/#how-it-works' },
     { name: 'Stamp Duty Calculator', href: '/calculator' },
     { name: 'Why Choose Us', href: '/#why-choose-us' },
@@ -54,7 +54,7 @@ export default function Header() {
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Logo className="h-10 w-10" />
-            <span className="hidden font-bold sm:inline-block font-headline">Krisha Enterprise</span>
+            <span className="font-bold sm:inline-block font-headline">Krisha Enterprise</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {navLinks.map((link) => (
@@ -135,6 +135,7 @@ export default function Header() {
             <div className="ml-4 md:hidden">
               <Link href="/" className="flex items-center space-x-2">
                   <Logo className="h-8 w-8" />
+                  <span className="font-bold font-headline">Krisha Enterprise</span>
               </Link>
             </div>
         </div>

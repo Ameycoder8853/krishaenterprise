@@ -7,4 +7,5 @@ export type ImagePlaceholder = {
   imageHint: string;
 };
 
-export const PlaceHolderImages: ImagePlaceholder[] = data.placeholderImages;
+// The JSON file is not a module, so we have to access the data directly.
+export const PlaceHolderImages: ImagePlaceholder[] = (data as any).placeholderImages;
