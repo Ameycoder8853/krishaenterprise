@@ -28,7 +28,7 @@ const calculatorSchema = z.object({
   ),
   rent: z.preprocess(
     (val) => (val === "" ? undefined : Number(val)),
-    z.number({ required_error: "Rent is required"}).min(1, 'Rent is required')
+    z.number({ required_error: "Rent is required"}).min(1, 'Rent is required').optional()
   ),
   refundableDeposit: z.preprocess(
     (val) => (val === "" ? undefined : Number(val)),
@@ -54,6 +54,13 @@ const calculatorSchema = z.object({
     z.number().optional()
   ),
 }).superRefine((data, ctx) => {
+    if (data.rentType === 'fixed' && !data.rent) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Rent is required for fixed rent type",
+        path: ["rent"],
+      });
+    }
     if (data.rentType === 'incremental') {
         if (!data.term1FromMonth) {
             ctx.addIssue({
@@ -122,7 +129,7 @@ export default function Calculator() {
 
     let totalRent = 0;
     if (data.rentType === 'fixed') {
-        totalRent = data.rent * data.months;
+        totalRent = (data.rent || 0) * data.months;
     } else {
         if (data.term1FromMonth && data.term1ToMonth && data.term1MonthlyRent) {
             const term1Duration = data.term1ToMonth - data.term1FromMonth + 1;
@@ -134,9 +141,6 @@ export default function Calculator() {
                  const subsequentRent = data.term1MonthlyRent * 1.1;
                  totalRent += remainingMonths * subsequentRent;
             }
-        } else {
-             // Fallback to fixed if incremental data is incomplete
-            totalRent = data.rent * data.months;
         }
     }
 
@@ -248,7 +252,7 @@ export default function Calculator() {
                 name="rent"
                 control={control}
                 render={({ field }) => (
-                  <Input id="rent" type="number" placeholder="Monthly Rent" {...field} value={field.value ?? ''}/>
+                  <Input id="rent" type="number" placeholder="Monthly Rent" {...field} value={field.value ?? ''} disabled={rentType === 'incremental'}/>
                 )}
               />
                {errors.rent && <p className="text-destructive text-xs">{errors.rent.message}</p>}
@@ -394,6 +398,3 @@ export default function Calculator() {
     </Card>
   );
 }
-
-
-    
