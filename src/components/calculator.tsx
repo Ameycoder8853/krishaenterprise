@@ -118,15 +118,7 @@ export default function Calculator() {
   const months = watch('months');
 
   const onSubmit = (data: CalculatorValues) => {
-    if (!firestore) {
-      toast({
-        variant: "destructive",
-        title: "Database not ready",
-        description: "Please wait a moment and try again.",
-      });
-      return;
-    }
-
+    // --- 1. Perform Calculation and Update UI Immediately ---
     let totalRent = 0;
     if (data.rentType === 'fixed') {
         totalRent = (data.rent || 0) * data.months;
@@ -157,6 +149,16 @@ export default function Calculator() {
     setCosts(finalCosts);
     setShowResult(true);
 
+    // --- 2. Save data to Firestore ---
+    if (!firestore) {
+      toast({
+        variant: "destructive",
+        title: "Database not ready",
+        description: "Calculation displayed, but could not save to our records. Please try again later.",
+      });
+      return;
+    }
+    
     const submissionsCollection = collection(firestore, 'calculator_form_submissions');
     const submissionData = {
       formValues: {
@@ -192,6 +194,7 @@ export default function Calculator() {
                 requestResourceData: submissionData,
             });
             errorEmitter.emit('permission-error', permissionError);
+            // The result is already shown, so we just inform the user about the save failure.
             toast({
               variant: "destructive",
               title: "Submission Failed",
@@ -399,3 +402,5 @@ export default function Calculator() {
     </Card>
   );
 }
+
+    
