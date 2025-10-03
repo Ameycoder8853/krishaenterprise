@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { z } from 'zod';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -53,9 +53,17 @@ export default function Calculator() {
 
   const watchedValues = watch();
 
+  const memoizedWatchedValues = useMemo(() => watchedValues, [
+    watchedValues.city,
+    watchedValues.rent,
+    watchedValues.deposit,
+    watchedValues.duration,
+  ]);
+
+
   useEffect(() => {
     const calculateCosts = () => {
-      const { rent, deposit, duration, city } = watchedValues;
+      const { rent, deposit, duration, city } = memoizedWatchedValues;
       if (!rent || !duration || rent <= 0) {
         setCosts({ stampDuty: 0, registrationFee: 0, serviceCharge: 1200, total: 1200 });
         return;
@@ -78,7 +86,7 @@ export default function Calculator() {
     };
 
     calculateCosts();
-  }, [watchedValues, costs.serviceCharge]);
+  }, [memoizedWatchedValues, costs.serviceCharge]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
