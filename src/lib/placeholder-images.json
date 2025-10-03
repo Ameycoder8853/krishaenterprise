@@ -59,6 +59,12 @@
       "description": "Two business partners shaking hands over a desk.",
       "imageUrl": "https://images.unsplash.com/photo-1529400971008-f566de0e6df1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwYXJ0bmVyc2hpcCUyMGhhbmRzaGFrZXxlbnwwfHx8fDE3NjA0NTU2NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "partnership handshake"
+    },
+    {
+      "id": "cta-background",
+      "description": "A panoramic view of a modern city skyline at dusk.",
+      "imageUrl": "https://images.unsplash.com/photo-1480714378408-67cf0d133b1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaXR5JTIwc2t5bGluZXxlbnwwfHx8fDE3NjA5NTI0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city skyline"
     }
   ]
 }

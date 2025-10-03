@@ -9,6 +9,10 @@ import {
   Star,
   Users,
   Wallet,
+  Fingerprint,
+  MapPin,
+  Building2,
+  Phone,
 } from 'lucide-react';
 
 import {
@@ -127,6 +131,21 @@ const whyChooseUs = [
         title: "Customer Satisfaction",
         description: "We are committed to providing the best service, with thousands of happy clients."
     }
+];
+
+const ctaFeatures = [
+    {
+        icon: Fingerprint,
+        title: "Biometric Verification"
+    },
+    {
+        icon: MapPin,
+        title: "Service at your Doorstep"
+    },
+    {
+        icon: Building2,
+        title: "No Govt Office Visits"
+    }
 ]
 
 const faqs = [
@@ -150,6 +169,7 @@ const faqs = [
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-image');
+  const ctaImage = PlaceHolderImages.find(img => img.id === 'cta-background');
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -282,6 +302,47 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <section id="cta" className="relative py-20 md:py-32">
+            {ctaImage && <Image
+                src={ctaImage.imageUrl}
+                alt={ctaImage.description}
+                data-ai-hint={ctaImage.imageHint}
+                fill
+                className="object-cover"
+            />}
+            <div className="absolute inset-0 bg-black/70" />
+            <div className="relative z-10 container px-4 md:px-6 text-center text-white">
+                <div className="max-w-4xl mx-auto">
+                    <div className="grid md:grid-cols-3 gap-8 items-center mb-12">
+                        {ctaFeatures.map((feature, index) => (
+                            <div key={feature.title} className="flex flex-col items-center gap-4 relative">
+                                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                                    <feature.icon className="h-10 w-10" />
+                                </div>
+                                <p className="font-semibold uppercase tracking-wider">{feature.title}</p>
+                                {index < ctaFeatures.length -1 && (
+                                    <div className="absolute top-10 left-1/2 w-full h-0.5 bg-white/50 hidden md:block" style={{ transform: 'translateX(50%)' }}></div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <h2 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl">NO GOVERNMENT OFFICE VISITS!</h2>
+                    <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                         <Button asChild size="lg" className="bg-white text-black hover:bg-white/90">
+                            <Link href="/services">Create Agreement</Link>
+                        </Button>
+                         <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
+                            <a href="tel:+919833799289">
+                                <Phone className="mr-2 h-5 w-5"/>
+                                +91 9833 799 289
+                            </a>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <section id="testimonials" className="py-12 md:py-24">
           <div className="container px-4 md:px-6">
