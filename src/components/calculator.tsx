@@ -40,6 +40,42 @@ const calculatorSchema = z.object({
   rentType: z.enum(['fixed', 'incremental']),
   mobile: z.string().regex(phoneRegex, { message: "Please enter a valid Indian phone number." }),
   location: z.string().min(1, 'Location is required'),
+  term1FromMonth: z.preprocess(
+    (val) => (val === "" ? undefined : Number(val)),
+    z.number().optional()
+  ),
+  term1ToMonth: z.preprocess(
+    (val) => (val === "" ? undefined : Number(val)),
+    z.number().optional()
+  ),
+  term1MonthlyRent: z.preprocess(
+    (val) => (val === "" ? undefined : Number(val)),
+    z.number().optional()
+  ),
+}).superRefine((data, ctx) => {
+    if (data.rentType === 'incremental') {
+        if (data.term1FromMonth === undefined) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "From month is required",
+                path: ["term1FromMonth"],
+            });
+        }
+        if (data.term1ToMonth === undefined) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "To month is required",
+                path: ["term1ToMonth"],
+            });
+        }
+        if (data.term1MonthlyRent === undefined) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Monthly rent is required",
+                path: ["term1MonthlyRent"],
+            });
+        }
+    }
 });
 
 type CalculatorValues = z.infer<typeof calculatorSchema>;
@@ -54,7 +90,7 @@ export default function Calculator() {
   const firestore = useFirestore();
   const { toast } = useToast();
 
-  const { control, handleSubmit, reset, formState: { errors } } = useForm<CalculatorValues>({
+  const { control, handleSubmit, reset, watch, formState: { errors } } = useForm<CalculatorValues>({
     resolver: zodResolver(calculatorSchema),
     defaultValues: {
       months: undefined,
@@ -64,8 +100,14 @@ export default function Calculator() {
       rentType: 'fixed',
       mobile: '',
       location: '',
+      term1FromMonth: 1,
+      term1ToMonth: undefined,
+      term1MonthlyRent: undefined,
     },
   });
+
+  const rentType = watch('rentType');
+  const months = watch('months');
 
   const onSubmit = async (data: CalculatorValues) => {
     if (!firestore) {
@@ -131,6 +173,9 @@ export default function Calculator() {
       rentType: 'fixed',
       mobile: '',
       location: '',
+      term1FromMonth: 1,
+      term1ToMonth: undefined,
+      term1MonthlyRent: undefined,
     });
     setShowResult(false);
     setCosts({ stampDuty: 0, registrationFee: 0, total: 0 });
@@ -198,12 +243,12 @@ export default function Calculator() {
                 )}
               />
             </div>
-             <div className="space-y-2">
+             <div className="space-y-2 col-span-1 sm:col-span-2">
                 <Controller
                     name="rentType"
                     control={control}
                     render={({ field }) => (
-                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center space-x-4">
+                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center space-x-4">
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="fixed" id="fixed" />
                                 <Label htmlFor="fixed">Fixed</Label>
@@ -216,30 +261,71 @@ export default function Calculator() {
                     )}
                 />
             </div>
-             <div></div>
-            <div className="space-y-2">
-              <Label htmlFor="mobile">MOBILE NO.*</Label>
-              <Controller
-                name="mobile"
-                control={control}
-                render={({ field }) => (
-                  <Input id="mobile" placeholder="Contact Details" {...field} />
-                )}
-              />
-              {errors.mobile && <p className="text-destructive text-xs">{errors.mobile.message}</p>}
-            </div>
-             <div className="space-y-2">
-              <Label htmlFor="location">LOCATION*</Label>
-              <Controller
-                name="location"
-                control={control}
-                render={({ field }) => (
-                  <Input id="location" placeholder="Property Location" {...field} />
-                )}
-              />
-              {errors.location && <p className="text-destructive text-xs">{errors.location.message}</p>}
-            </div>
           </div>
+          
+           {rentType === 'incremental' && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t">
+                  <div className="space-y-2">
+                    <Label htmlFor="term1FromMonth">Term 1 (from month)</Label>
+                    <Controller
+                        name="term1FromMonth"
+                        control={control}
+                        render={({ field }) => (
+                            <Input id="term1FromMonth" type="number" {...field} value={field.value ?? ''} readOnly/>
+                        )}
+                    />
+                     {errors.term1FromMonth && <p className="text-destructive text-xs">{errors.term1FromMonth.message}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="term1ToMonth">Term 1 (to month)</Label>
+                    <Controller
+                        name="term1ToMonth"
+                        control={control}
+                        render={({ field }) => (
+                            <Input id="term1ToMonth" type="number" placeholder="e.g. 12" {...field} value={field.value ?? months ?? ''} />
+                        )}
+                    />
+                    {errors.term1ToMonth && <p className="text-destructive text-xs">{errors.term1ToMonth.message}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="term1MonthlyRent">Term 1 Monthly Rent*</Label>
+                    <Controller
+                        name="term1MonthlyRent"
+                        control={control}
+                        render={({ field }) => (
+                            <Input id="term1MonthlyRent" type="number" placeholder="e.g. 10000" {...field} value={field.value ?? ''} />
+                        )}
+                    />
+                    {errors.term1MonthlyRent && <p className="text-destructive text-xs">{errors.term1MonthlyRent.message}</p>}
+                  </div>
+              </div>
+            )}
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t">
+                <div className="space-y-2">
+                  <Label htmlFor="mobile">MOBILE NO.*</Label>
+                  <Controller
+                    name="mobile"
+                    control={control}
+                    render={({ field }) => (
+                      <Input id="mobile" placeholder="Contact Details" {...field} />
+                    )}
+                  />
+                  {errors.mobile && <p className="text-destructive text-xs">{errors.mobile.message}</p>}
+                </div>
+                 <div className="space-y-2">
+                  <Label htmlFor="location">LOCATION*</Label>
+                  <Controller
+                    name="location"
+                    control={control}
+                    render={({ field }) => (
+                      <Input id="location" placeholder="Property Location" {...field} />
+                    )}
+                  />
+                  {errors.location && <p className="text-destructive text-xs">{errors.location.message}</p>}
+                </div>
+            </div>
+
           <div className="flex gap-4 pt-4">
             <Button type="submit" className="w-full" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }}>CALCULATE</Button>
             <Button type="button" variant="outline" className="w-full" onClick={handleReset}>RESET</Button>
