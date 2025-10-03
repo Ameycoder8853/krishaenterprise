@@ -1,5 +1,6 @@
 'use server'
 import { summarizeAgreement } from '@/ai/flows/ai-summarize-agreement'
+import { Resend } from 'resend';
 
 export async function getSummary(agreementText: string) {
   try {
@@ -22,23 +23,41 @@ interface ContactFormData {
 }
 
 export async function sendContactEmail(formData: ContactFormData) {
-  // In a real application, you would use a transactional email service
-  // like SendGrid, Mailgun, or AWS SES to send the email.
-  // For this demo, we'll just log the data to the console to simulate
-  // sending an email, as we can't send real emails from here.
-  
-  console.log("--- New Contact Form Submission ---");
-  console.log(`To: amey35195@gmail.com`);
-  console.log(`Name: ${formData.name}`);
-  console.log(`Email: ${formData.email}`);
-  console.log(`Phone: ${formData.phone}`);
-  console.log(`Message: ${formData.message}`);
-  console.log("------------------------------------");
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not set. Email not sent.");
+    return { success: false, error: "Email service is not configured." };
+  }
 
-  // Since we can't actually send an email, we'll always return success.
-  // In a real app, you would handle potential errors from the email service.
-  return { success: true, error: null };
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const subject = `New Contact Form Submission from ${formData.name}`;
+  const body = `
+    <p>You have a new contact form submission:</p>
+    <ul>
+      <li><strong>Name:</strong> ${formData.name}</li>
+      <li><strong>Email:</strong> ${formData.email}</li>
+      <li><strong>Phone:</strong> ${formData.phone}</li>
+      <li><strong>Message:</strong></li>
+    </ul>
+    <p>${formData.message}</p>
+  `;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'Krisha Enterprise <onboarding@resend.dev>',
+      to: ['amey35195@gmail.com'],
+      subject: subject,
+      html: body,
+    });
+
+    if (error) {
+      console.error('Resend API Error:', error);
+      return { success: false, error: "Failed to send email. Please try again later." };
+    }
+
+    console.log('Email sent successfully:', data);
+    return { success: true, error: null };
+  } catch (error) {
+    console.error("Error sending email: ", error);
+    return { success: false, error: "An unexpected error occurred while sending the email." };
+  }
 }
