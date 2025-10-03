@@ -62,10 +62,10 @@ export default function AdminPage() {
                   {submissions?.map((submission) => (
                     <TableRow key={submission.id}>
                       <TableCell>{new Date(submission.submissionDate).toLocaleDateString()}</TableCell>
-                      <TableCell>{submission.location}</TableCell>
-                      <TableCell>{formatCurrency(submission.rent)}</TableCell>
+                      <TableCell>{submission.formValues.location}</TableCell>
+                      <TableCell>{formatCurrency(submission.formValues.rent)}</TableCell>
                       <TableCell>{formatCurrency(submission.calculatedCosts.total)}</TableCell>
-                      <TableCell>{submission.mobile}</TableCell>
+                      <TableCell>{submission.formValues.mobile}</TableCell>
                     </TableRow>
                   ))}
                   {!isLoading && submissions?.length === 0 && (

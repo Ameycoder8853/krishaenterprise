@@ -50,6 +50,16 @@ export default function Calculator() {
   });
 
   const onSubmit = async (data: CalculatorValues) => {
+    // This check is to ensure that Firestore is available before proceeding.
+    if (!firestore) {
+      toast({
+        variant: "destructive",
+        title: "Database not ready",
+        description: "Please wait a moment and try again.",
+      });
+      return;
+    }
+
     const totalRent = data.rent * data.months;
     const stampDutyBase = totalRent + (data.refundableDeposit * 0.1);
     let stampDuty = stampDutyBase * 0.0025;
