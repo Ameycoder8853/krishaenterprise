@@ -1,15 +1,13 @@
 
-import Image from 'next/image';
 import { cn } from "@/lib/utils";
 
 export function Logo({ className }: { className?: string }) {
   return (
     <div className={cn("relative", className)}>
-      <Image
+      <img
         src="/logo.png"
         alt="Krisha Enterprise Logo"
-        fill
-        className="object-contain"
+        className="object-contain w-full h-full"
         aria-label="Krisha Enterprise Logo"
       />
     </div>
