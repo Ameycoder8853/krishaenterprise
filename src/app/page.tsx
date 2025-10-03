@@ -26,6 +26,9 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -130,7 +133,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <section className="relative h-[80vh] md:h-[90vh]">
+        <section className="relative h-auto py-20 md:py-24 lg:py-32">
           <Image
             src={heroImage.imageUrl}
             alt={heroImage.description}
@@ -139,23 +142,64 @@ export default function Home() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
-            <div className="container px-4 md:px-6">
-              <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                Online Rent Agreement & Legal Documents
-              </h1>
-              <p className="mx-auto mt-4 max-w-[700px] text-lg text-foreground/80 md:text-xl">
-                India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
-                  <Link href="/services">Get Started Now</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="bg-background/80">
-                  <Link href="/pricing">View Pricing</Link>
-                </Button>
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative z-10 container px-4 md:px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-white">
+                <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+                  Online Rent Agreement & Legal Documents
+                </h1>
+                <p className="mt-4 max-w-[600px] text-lg text-white/90 md:text-xl">
+                  India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
+                </p>
               </div>
+               <Card className="bg-background/90 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="font-headline text-2xl">Check Stamp Duty Instantly</CardTitle>
+                  <CardDescription>Fill the details below to get an estimate.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form className="space-y-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="hero-service">Service</Label>
+                        <Select>
+                            <SelectTrigger id="hero-service">
+                                <SelectValue placeholder="Select a service" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="rental-agreement">Rental Agreement</SelectItem>
+                                <SelectItem value="leave-license">Leave & License</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="hero-city">City</Label>
+                        <Select>
+                            <SelectTrigger id="hero-city">
+                                <SelectValue placeholder="Select a city" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="mumbai">Mumbai</SelectItem>
+                                <SelectItem value="pune">Pune</SelectItem>
+                                <SelectItem value="bangalore">Bangalore</SelectItem>
+                                <SelectItem value="delhi">Delhi</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                     <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="hero-rent">Monthly Rent</Label>
+                            <Input id="hero-rent" type="number" placeholder="e.g., 25000" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="hero-deposit">Deposit Amount</Label>
+                            <Input id="hero-deposit" type="number" placeholder="e.g., 100000" />
+                        </div>
+                    </div>
+                    <Button type="submit" className="w-full" size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }}>Calculate</Button>
+                  </form>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

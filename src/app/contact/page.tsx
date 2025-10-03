@@ -70,7 +70,7 @@ export default function ContactPage() {
                     <Mail className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold">Email</h3>
-                      <a href="mailto:support@krishaenterprise.com" className="text-foreground/80 hover:text-primary">support@krishaenterprise.com</a>
+                      <a href="mailto:amey35195@gmail.com" className="text-foreground/80 hover:text-primary">amey35195@gmail.com</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
