@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -11,6 +12,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
 import { useUser, useAuth } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
+import { Separator } from '../ui/separator';
 
 const navLinks = [
     { name: 'About US', href: '/about' },
@@ -79,8 +81,8 @@ export default function Header() {
                         <span className="sr-only">Toggle Menu</span>
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left">
-                    <Link href="/" className="flex items-center space-x-2 mb-8">
+                <SheetContent side="left" className="flex flex-col">
+                    <Link href="/" className="flex items-center space-x-2 mb-4">
                         <Logo className="h-8 w-8" />
                         <span className="font-bold font-headline">Krisha Enterprise</span>
                     </Link>
@@ -98,6 +100,30 @@ export default function Header() {
                         </Link>
                         ))}
                     </nav>
+                     <div className="mt-auto pt-4">
+                      <Separator />
+                       <div className="flex flex-col space-y-2 pt-4">
+                          {!isUserLoading && (
+                            <>
+                              {user ? (
+                                <Button onClick={handleLogout} variant="outline" size="lg">
+                                  <LogOut className="mr-2 h-4 w-4" />
+                                  Logout
+                                </Button>
+                              ) : (
+                                <>
+                                  <Button asChild size="lg" variant="ghost">
+                                    <Link href="/login">Login</Link>
+                                  </Button>
+                                  <Button asChild size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
+                                    <Link href="/register">Register</Link>
+                                  </Button>
+                                </>
+                              )}
+                            </>
+                          )}
+                       </div>
+                    </div>
                 </SheetContent>
             </Sheet>
             <div className="ml-4 md:hidden">
@@ -109,7 +135,7 @@ export default function Header() {
 
         <div className="flex flex-1 items-center justify-end space-x-2">
           {!isUserLoading && (
-            <>
+            <div className='hidden md:flex md:items-center md:space-x-2'>
               {user ? (
                 <>
                   <Button onClick={handleLogout} style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
@@ -127,7 +153,7 @@ export default function Header() {
                   </Button>
                 </>
               )}
-            </>
+            </div>
           )}
         </div>
       </div>
