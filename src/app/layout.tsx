@@ -6,7 +6,7 @@ import { ContactPopup } from '@/components/contact-popup';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'Krisha Enterprise',
+  title: 'KE Online Rent Agreement Registration',
   description: 'Your trusted partner for legal agreements.',
 };
 
