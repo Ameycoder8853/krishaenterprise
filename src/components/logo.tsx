@@ -3,13 +3,14 @@ import { cn } from "@/lib/utils";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Image
-      src="/logo.png"
-      alt="Krisha Enterprise Logo"
-      width={100}
-      height={100}
-      className={cn(className)}
-      aria-label="Krisha Enterprise Logo"
-    />
+    <div className={cn("relative", className)}>
+      <Image
+        src="/logo.png"
+        alt="Krisha Enterprise Logo"
+        fill
+        className="object-contain"
+        aria-label="Krisha Enterprise Logo"
+      />
+    </div>
   );
 }
