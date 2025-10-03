@@ -187,10 +187,6 @@ export default function Home() {
           <div className="relative z-10 container px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-white">
-                
-                <p className="mt-4 max-w-[600px] text-lg text-white/90 md:text-xl">
-                  India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
-                </p>
 
                 <div className="mt-10 text-white">
                     <div className="grid sm:grid-cols-3 gap-6 items-center mb-8">
