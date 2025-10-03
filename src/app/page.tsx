@@ -26,13 +26,10 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Calculator from '@/components/calculator';
 
 const services = [
   {
@@ -153,53 +150,9 @@ export default function Home() {
                   India's Most Trusted Platform for Legal Agreements. Create, customize, and execute legally binding agreements with confidence. Fast, secure, and user-friendly.
                 </p>
               </div>
-               <Card className="bg-background/90 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="font-headline text-2xl">Check Stamp Duty Instantly</CardTitle>
-                  <CardDescription>Fill the details below to get an estimate.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form className="space-y-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="hero-service">Service</Label>
-                        <Select>
-                            <SelectTrigger id="hero-service">
-                                <SelectValue placeholder="Select a service" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="rental-agreement">Rental Agreement</SelectItem>
-                                <SelectItem value="leave-license">Leave & License</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="hero-city">City</Label>
-                        <Select>
-                            <SelectTrigger id="hero-city">
-                                <SelectValue placeholder="Select a city" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="mumbai">Mumbai</SelectItem>
-                                <SelectItem value="pune">Pune</SelectItem>
-                                <SelectItem value="bangalore">Bangalore</SelectItem>
-                                <SelectItem value="delhi">Delhi</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                     <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="hero-rent">Monthly Rent</Label>
-                            <Input id="hero-rent" type="number" placeholder="e.g., 25000" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="hero-deposit">Deposit Amount</Label>
-                            <Input id="hero-deposit" type="number" placeholder="e.g., 100000" />
-                        </div>
-                    </div>
-                    <Button type="submit" className="w-full" size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }}>Calculate</Button>
-                  </form>
-                </CardContent>
-              </Card>
+               <div className="bg-background/90 backdrop-blur-sm rounded-lg">
+                <Calculator />
+              </div>
             </div>
           </div>
         </section>
