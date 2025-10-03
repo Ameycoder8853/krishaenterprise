@@ -117,7 +117,7 @@ export default function Calculator() {
   const rentType = watch('rentType');
   const months = watch('months');
 
-  const onSubmit = async (data: CalculatorValues) => {
+  const onSubmit = (data: CalculatorValues) => {
     if (!firestore) {
       toast({
         variant: "destructive",
@@ -177,26 +177,27 @@ export default function Calculator() {
       calculatedCosts: finalCosts,
     };
     
-    try {
-        await addDoc(submissionsCollection, submissionData);
-        toast({
-          title: "Calculation Saved",
-          description: "Your submission has been successfully recorded.",
+    addDoc(submissionsCollection, submissionData)
+        .then(() => {
+            toast({
+              title: "Calculation Saved",
+              description: "Your submission has been successfully recorded.",
+            });
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+            const permissionError = new FirestorePermissionError({
+                path: submissionsCollection.path,
+                operation: 'create',
+                requestResourceData: submissionData,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+            toast({
+              variant: "destructive",
+              title: "Submission Failed",
+              description: "Could not save your calculation. Check permissions.",
+            });
         });
-    } catch (error) {
-        console.error("Error adding document: ", error);
-        const permissionError = new FirestorePermissionError({
-            path: submissionsCollection.path,
-            operation: 'create',
-            requestResourceData: submissionData,
-        });
-        errorEmitter.emit('permission-error', permissionError);
-        toast({
-          variant: "destructive",
-          title: "Submission Failed",
-          description: "Could not save your calculation. Check permissions.",
-        });
-    }
   };
   
   const handleReset = () => {
