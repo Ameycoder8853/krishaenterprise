@@ -3,27 +3,41 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, LogOut } from 'lucide-react';
+import { Menu, LogOut, ChevronDown } from 'lucide-react';
 import { signOut } from 'firebase/auth';
-import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
 import { useUser, useAuth } from '@/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '../ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 
 const navLinks = [
-    { name: 'About Us', href: '/about' },
+    { name: 'About Us', href: '/about/' },
     { name: 'How it Works', href: '/#how-it-works' },
     { name: 'Stamp Duty Calculator', href: '/calculator' },
     { name: 'Why Choose Us', href: '/#why-choose-us' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Contact', href: '/contact' },
-    { name: '', href: '/' },
 ];
+
+const cities = [
+  "Vikhroli", "Ghatkopar", "Kurla", "Sion", "Matunga", "Vashi", "Mankhurd",
+  "Govandi", "Shivaji Nagar", "Kanjurmarg", "Kalyan", "Dombivli", 
+  "Badlapur", "Dadar", "Andheri", "Sakinaka", "Marol", "Powai"
+];
+
 
 export default function Header() {
   const pathname = usePathname();
@@ -50,16 +64,34 @@ export default function Header() {
     }
   };
 
+  const CitiesDropdown = () => (
+     <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="flex items-center gap-1 text-foreground/60 transition-colors hover:text-foreground/80 focus-visible:ring-0">
+            Cities
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuLabel>CITIES WE SERVICE</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <div className="grid grid-cols-2 gap-2 p-2">
+            {cities.map((city) => (
+              <DropdownMenuItem key={city} onSelect={() => { /* Can navigate or perform action */ }}>
+                {city}
+              </DropdownMenuItem>
+            ))}
+          </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+  );
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-              <img 
-                src="/logo.png" 
-                alt="Krisha Enterprise" 
-                className="h-12 w-12 rounded-full"
-              />
+            <Logo className="h-10 w-10" />
             <span className="font-bold sm:inline-block font-headline">Krisha Enterprise</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -75,6 +107,7 @@ export default function Header() {
                 {link.name}
               </Link>
             ))}
+            <CitiesDropdown />
           </nav>
         </div>
         
@@ -111,6 +144,18 @@ export default function Header() {
                             {link.name}
                         </Link>
                         ))}
+                         <Accordion type="single" collapsible className="w-full">
+                          <AccordionItem value="cities" className="border-b-0">
+                            <AccordionTrigger className="text-lg text-foreground/70 hover:no-underline">Cities</AccordionTrigger>
+                            <AccordionContent>
+                              <div className="grid grid-cols-2 gap-x-4 gap-y-2 pl-4">
+                                {cities.map((city) => (
+                                  <Link key={city} href="#" className="text-foreground/70 text-base">{city}</Link>
+                                ))}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
                     </nav>
                      <div className="mt-auto pt-4">
                       <Separator />
@@ -140,11 +185,7 @@ export default function Header() {
             </Sheet>
             <div className="ml-4 md:hidden">
               <Link href="/" className="flex items-center space-x-2">
-                  <img 
-                src="/logo.png" 
-                alt="Krisha Enterprise" 
-                className="h-12 w-12 rounded-full"
-              />
+                  <Logo className="h-8 w-8" />
                   <span className="font-bold font-headline">Krisha Enterprise</span>
               </Link>
             </div>
@@ -155,6 +196,9 @@ export default function Header() {
             <div className='hidden md:flex md:items-center md:space-x-2'>
               {user ? (
                 <>
+                  <Button asChild variant="secondary">
+                     <Link href="/dashboard">Dashboard</Link>
+                  </Button>
                   <Button onClick={handleLogout} style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--primary-foreground))' }} className="hover:opacity-90">
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
@@ -177,5 +221,3 @@ export default function Header() {
     </header>
   );
 }
-
-    
