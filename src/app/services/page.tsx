@@ -10,28 +10,28 @@ const services = [
     icon: FileText,
     title: 'Rental Agreement',
     description: 'A comprehensive rental agreement to protect both landlords and tenants. Covers all essential clauses, rent terms, and responsibilities. Our guided process ensures all legal requirements are met for a valid and enforceable contract.',
-    price: 'Starting from ₹1,499'
+    price: ''
   },
   {
     id: 'leave-license',
     icon: Landmark,
     title: 'Leave & License Agreement',
     description: 'Formalize the terms of property usage with a Leave and License agreement. Ideal for short-term occupancy, this agreement is made easy with our customizable templates. We handle the registration process for you.',
-    price: 'Starting from ₹1,799'
+    price: ''
   },
   {
     id: 'partnership',
     icon: Users,
     title: 'Partnership Deed',
     description: 'Establish a clear framework for your business partnership. Our partnership deeds define profit/loss sharing, roles, responsibilities, and exit strategies, preventing future disputes and ensuring smooth operations.',
-    price: 'Starting from ₹4,999'
+    price: ''
   },
   {
     id: 'affidavits',
     icon: Wallet,
     title: 'Affidavits',
     description: 'Create various types of legally binding affidavits for official purposes. Whether for a name change, proof of address, or other declarations, our platform simplifies the creation and notarization process for you.',
-    price: 'Starting from ₹799'
+    price: ''
   },
 ];
 
