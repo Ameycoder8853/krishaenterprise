@@ -132,7 +132,11 @@ export default function Header() {
                       </SheetDescription>
                     </SheetHeader>
                     <Link href="/" className="flex items-center space-x-2 mb-4">
-                        <Logo className="h-8 w-8" />
+            <img 
+                src="/logo.png" 
+                alt="Krisha Enterprise" 
+                className="h-12 w-12 rounded-full"
+              />
                         <span className="font-bold font-headline">Krisha Enterprise</span>
                     </Link>
                     <nav className="flex flex-col space-y-4">
