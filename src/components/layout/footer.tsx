@@ -20,7 +20,11 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <Logo className="h-10 w-10" />
+              <img 
+                src="/logo.png" 
+                alt="Krisha Enterprise" 
+                className="h-12 w-12 rounded-full"
+              />
               <span className="font-headline text-xl font-bold">Krisha Enterprise</span>
             </Link>
             <p className="max-w-xs text-foreground/80">
