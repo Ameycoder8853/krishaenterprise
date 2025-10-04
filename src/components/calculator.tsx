@@ -115,7 +115,7 @@ export default function Calculator() {
 
     const registrationFee = 1000;
     
-    const total = stampDuty + registrationFee + 700; // 700 for consultancy & processing
+    const total = stampDuty + registrationFee + 1800 + 300; // Services (1800) + DHC (300)
 
     const finalCosts = { stampDuty, registrationFee, total };
     setCosts(finalCosts);
@@ -358,8 +358,12 @@ export default function Calculator() {
                             <span className="font-semibold">{formatCurrency(costs.registrationFee)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-foreground/80">Consultancy & Processing</span>
-                            <span className="font-semibold">{formatCurrency(700)}</span>
+                            <span className="text-foreground/80">Services</span>
+                            <span className="font-semibold">{formatCurrency(1800)}</span>
+                        </div>
+                         <div className="flex justify-between items-center">
+                            <span className="text-foreground/80">DHC</span>
+                            <span className="font-semibold">{formatCurrency(300)}</span>
                         </div>
                     </div>
                      <Separator className="my-4" />
@@ -374,5 +378,7 @@ export default function Calculator() {
     </Card>
   );
 }
+
+    
 
     
