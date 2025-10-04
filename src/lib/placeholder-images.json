@@ -1,10 +1,12 @@
 {
   "placeholderImages": [
     {
+      {
       "id": "hero-image",
-      "description": "A modern office setting with people signing documents.",
-      "imageUrl": "https://images.unsplash.com/photo-1614605844432-731c32334c49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxsZWdhbCUyMGRvY3VtZW50fGVufDB8fHx8MTc1OTQwMzIwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "legal document"
+      "description": "A model house on top of a rental agreement document.",
+      "imageUrl": "/hero-background.jpg",
+      "imageHint": "house agreement"
+    },
     },
     {
       "id": "testimonial-1",
