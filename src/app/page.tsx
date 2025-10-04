@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import Image from 'next/image';
@@ -16,6 +17,10 @@ import {
   MapPin,
   Building2,
   Phone,
+  Headset,
+  ClipboardList,
+  CalendarClock,
+  MessageCircle,
 } from 'lucide-react';
 
 import {
@@ -153,26 +158,72 @@ const ctaFeatures = [
 ]
 
 const faqs = [
-  {
-    question: "What is a rental agreement?",
-    answer: "A rental agreement is a legal document that binds the owner of a property and a tenant who wants to take temporary possession of the property. It outlines the terms and conditions of the tenancy."
-  },
-  {
-    question: "Is it mandatory to register a rental agreement?",
-    answer: "In India, it is mandatory to register a rental agreement if the tenancy period is for 12 months or more. For shorter periods, it's highly recommended for legal security."
-  },
-  {
-    question: "What documents are required for a rental agreement?",
-    answer: "Typically, you'll need identity proof (like Aadhaar or Passport) and address proof for both the landlord and the tenant, as well as two passport-sized photographs of each."
-  },
-  {
-    question: "How is stamp duty calculated?",
-    answer: "Stamp duty is calculated based on the total rent amount for the tenancy period, the security deposit, and the location (state) of the property. Our calculator provides a detailed estimate."
-  }
+    {
+        question: "Documents required for E-Registration?",
+        answer: "Aadhaar card with Address of all the parties (Owner/s, Tenant/s, 2 Witnesses) by E-mail or on Whatsapp.\n\nPAN number of all Owners.Property Address which is to be given on Rent, along with area of Flat and Pin Code\n\nPeriod of Agreement and Starting Date.\n\nLock-in period if any Deposit and Deposit cheque details.\n\nRent Details: Power of Attorney for Individuals, Authority Letter with Stamp, Sign and Photo in case of Companies such as Pvt. Ltd., Public Ltd., Proprietorship, LLP, HUF, etc."
+    },
+    {
+        question: "Do I need to go to registration office?",
+        answer: "None of the parties has to visit the registration office. The whole process will be done sitting at your place and that too at your convenient time."
+    },
+    {
+        question: "Can I add my own clauses apart from Standard Government Clause?",
+        answer: "Yes, of course. You can add as many clauses you want to add."
+    },
+    {
+        question: "Can a company enter into LL E-registration agreement & is that legal and valid?",
+        answer: "We provide doorstep services to both parties separately, if need."
+    },
+    {
+        question: "What if the landlord and tenant are in different cities?",
+        answer: "We provide doorstep services to both parties separately, if need."
+    },
+    {
+        question: "I don’t have an Aadhaar card number. What should I do?",
+        answer: "If you don’t have Aadhaar card, you will have to go for offline registration. We also provide offline registration"
+    }
 ];
+
+
+const takeActionItems = [
+  {
+    icon: ClipboardList,
+    text: 'Begin the registration process now',
+    link: 'https://wa.me/919326069149',
+    linkText: 'Click Here!'
+  },
+  {
+    icon: Headset,
+    text: 'Call our customer service +91-9326069149 for assistance',
+    link: 'https://wa.me/919326069149',
+    linkText: 'Click Here!'
+  },
+  {
+    icon: CalendarClock,
+    text: 'Register for a callback at your preferred time',
+    link: 'https://wa.me/919326069149',
+    linkText: 'Click Here!'
+  },
+  {
+    icon: (props: any) => (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-65.7-10.8-94.2-30.6l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+      </svg>
+    ),
+    text: 'You can easily send all documents on WhatsApp',
+    link: 'https://wa.me/919326069149',
+    linkText: 'Click Here!'
+  },
+];
+
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'hero-image');
+  const oneSideBiometricsImage = PlaceHolderImages.find(img => img.id === 'ai-feature-image');
 
   const animatedSections = useRef<Array<HTMLElement | null>>([]);
 
@@ -222,9 +273,9 @@ export default function Home() {
           />}
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative z-10 container px-4 md:px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-1 gap-12 items-center text-center">
               <div className="text-white">
-                 <div className="grid sm:grid-cols-3 gap-6 items-center mb-8">
+                 <div className="grid sm:grid-cols-3 gap-6 items-center mb-8 max-w-2xl mx-auto">
                     {ctaFeatures.map((feature, index) => (
                         <div key={feature.title} className="flex flex-col items-center text-center gap-2 relative">
                             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
@@ -234,9 +285,12 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
-                <h2 className="font-headline text-2xl font-bold tracking-tight sm:text-3xl text-center">NO GOVERNMENT OFFICE VISITS!</h2>
+                <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-center">Your Trusted Partner for Legal Agreements</h1>
+                <p className="mt-6 max-w-3xl mx-auto text-lg text-white/90">
+                    Fast, affordable, and legally-binding digital agreements with doorstep service. NO GOVERNMENT OFFICE VISITS!
+                </p>
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                      <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
+                      <Button asChild size="lg" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} className="hover:opacity-90 w-full sm:w-auto">
                         <Link href="/services">Create Agreement</Link>
                     </Button>
                       <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
@@ -246,9 +300,6 @@ export default function Home() {
                         </a>
                     </Button>
                 </div>
-              </div>
-               <div className="bg-background/90 backdrop-blur-sm rounded-lg">
-                <Calculator />
               </div>
             </div>
           </div>
@@ -321,8 +372,33 @@ export default function Home() {
                 </div>
             </div>
         </section>
+        
+        <section id="one-side-biometrics" className="py-12 md:py-24 bg-secondary/50 opacity-0" ref={(el) => animatedSections.current.push(el)}>
+            <div className="container px-4 md:px-6">
+                <div className="grid md:grid-cols-1 gap-12 items-center">
+                    <div className="text-center">
+                        <p className="text-primary font-bold">WE ARE READY TO HELP YOU</p>
+                        <h2 className="font-headline text-4xl font-bold tracking-tight mt-2">One-Side Biometrics?</h2>
+                        <p className="mt-4 text-lg text-foreground/80 max-w-3xl mx-auto">
+                            Are you looking for only One-Side Biometrics? (India & International locations). We simplify this process with our 100+ national and 20+ International locations ready for you!
+                        </p>
+                        <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center">
+                            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+                                <Link href="/contact"><Phone className="mr-2 h-5 w-5"/>REQUEST CALL BACK</Link>
+                            </Button>
+                            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+                                <a href="tel:+919326069149">
+                                    <Phone className="mr-2 h-5 w-5"/>
+                                    +91 9326069149
+                                </a>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="how-it-works" className="bg-secondary/50 py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
+        <section id="how-it-works" className="py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
           <div className="container px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
@@ -351,6 +427,43 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+        
+        <section id="take-action" className="py-12 md:py-24 opacity-0 bg-secondary/50" ref={(el) => animatedSections.current.push(el)}>
+          <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                TAKE ACTION NOW
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {takeActionItems.map((item, index) => (
+                <Card key={index} className="text-center p-6 flex flex-col items-center justify-start h-full">
+                  <item.icon className="h-16 w-16 mb-4 text-primary" />
+                  <p className="text-foreground/80 flex-grow">{item.text}</p>
+                  <Button asChild variant="link" className="mt-4 font-bold text-primary">
+                    <Link href={item.link} target={item.link.startsWith('http') ? '_blank' : '_self'}>{item.linkText}</Link>
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="calculator" className="py-12 md:py-24 opacity-0" ref={(el) => animatedSections.current.push(el)}>
+          <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                Estimate Your Costs
+              </h2>
+              <p className="mt-4 text-lg text-foreground/80">
+                Use our calculator to get a transparent breakdown of all costs associated with your agreement.
+              </p>
+            </div>
+            <div className="mt-12 max-w-3xl mx-auto">
+              <Calculator />
             </div>
           </div>
         </section>
@@ -425,7 +538,7 @@ export default function Home() {
                 {faqs.map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index + 1}`}>
                     <AccordionTrigger className="text-left font-semibold text-lg">{faq.question}</AccordionTrigger>
-                    <AccordionContent className="text-base text-foreground/80">
+                    <AccordionContent className="text-base text-foreground/80 whitespace-pre-line">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -457,4 +570,14 @@ export default function Home() {
   );
 }
 
+
+
     
+
+
+
+
+    
+
+
+
