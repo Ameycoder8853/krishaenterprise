@@ -22,7 +22,7 @@ const navLinks = [
     { name: 'Why Choose Us', href: '/#why-choose-us' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Blog', href: '/blog' },
+    { name: '', href: '/' },
 ];
 
 export default function Header() {
@@ -140,7 +140,11 @@ export default function Header() {
             </Sheet>
             <div className="ml-4 md:hidden">
               <Link href="/" className="flex items-center space-x-2">
-                  <Logo className="h-8 w-8" />
+                  <img 
+                src="/logo.png" 
+                alt="Krisha Enterprise" 
+                className="h-12 w-12 rounded-full"
+              />
                   <span className="font-bold font-headline">Krisha Enterprise</span>
               </Link>
             </div>
