@@ -240,9 +240,9 @@ export default function Home() {
                         <Link href="/services">Create Agreement</Link>
                     </Button>
                       <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black w-full sm:w-auto">
-                        <a href="tel:+919833799289">
+                        <a href="tel:+919326069149">
                             <Phone className="mr-2 h-5 w-5"/>
-                            +91 9833 799 289
+                            +91 9326069149
                         </a>
                     </Button>
                 </div>
