@@ -442,7 +442,7 @@ export default function Home() {
                 Get In Touch
               </h2>
               <p className="mt-4 text-lg text-foreground/80">
-                Have questions? We&apos;d love to hear from you. Fill out the form below and we&apos;ll get back to you shortly.
+                Have questions? We'd love to hear from you. Fill out the form below and we'll get back to you shortly.
               </p>
             </div>
             <div className="mt-12 max-w-xl mx-auto">
@@ -456,5 +456,3 @@ export default function Home() {
     </div>
   );
 }
-
-    

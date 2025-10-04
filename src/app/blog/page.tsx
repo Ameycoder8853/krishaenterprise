@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/layout/header";
@@ -5,34 +6,8 @@ import Footer from "@/components/layout/footer";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, User } from "lucide-react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { blogPosts, PlaceHolderImages } from "@/lib/placeholder-images";
 
-const blogPosts = [
-  {
-    title: "Understanding Rental Agreements in India: A Complete Guide",
-    author: "Jane Smith",
-    date: "2024-07-15",
-    excerpt: "Everything you need to know about rental agreements, from key clauses to the registration process. Ensure you are protected as a landlord or tenant...",
-    image: PlaceHolderImages.find(img => img.id === 'hero-image'),
-    slug: "/blog/understanding-rental-agreements"
-  },
-  {
-    title: "Notarized vs. Registered Agreement: What's the Difference?",
-    author: "John Doe",
-    date: "2024-07-10",
-    excerpt: "One of the most common questions we get. This post breaks down the key differences, pros, and cons of notarized and registered agreements in India.",
-    image: PlaceHolderImages.find(img => img.id === 'ai-feature-image'),
-    slug: "/blog/notarized-vs-registered"
-  },
-  {
-    title: "5 Essential Clauses for Your Partnership Deed",
-    author: "Anil Kumar",
-    date: "2024-07-05",
-    excerpt: "Starting a business with a partner? A solid partnership deed is crucial. We cover the 5 must-have clauses to protect your business and relationship.",
-    image: PlaceHolderImages.find(img => img.id === 'testimonial-3'),
-    slug: "/blog/5-clauses-for-partnership-deed"
-  },
-];
 
 export default function BlogPage() {
   return (
@@ -55,14 +30,14 @@ export default function BlogPage() {
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {blogPosts.map((post) => (
                 <Card key={post.title} className="overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                  <Link href={post.slug} className="block">
+                  <Link href={`/blog/${post.slug}`} className="block">
                     <CardHeader className="p-0">
                       {post.image && <div className="relative h-56 w-full">
                         <Image
                           src={post.image.imageUrl}
                           alt={post.title}
-                          layout="fill"
-                          objectFit="cover"
+                          fill
+                          className="object-cover"
                           data-ai-hint={post.image.imageHint}
                         />
                       </div>}
