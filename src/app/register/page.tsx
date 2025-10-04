@@ -72,7 +72,11 @@ export default function RegisterPage() {
         <Card className="mx-auto max-w-sm w-full">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Logo className="h-12 w-12" />
+              <img 
+                src="/logo.png" 
+                alt="Krisha Enterprise" 
+                className="h-12 w-12 rounded-full"
+              />
             </div>
             <CardTitle className="text-2xl font-headline">Create an Account</CardTitle>
             <CardDescription>
