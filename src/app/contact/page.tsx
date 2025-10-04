@@ -128,7 +128,7 @@ export default function ContactPage() {
                     <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold">Address</h3>
-                      <p className="text-foreground/80">Dev Krupa society , shop number 1 , Ground floor , V n marg ,  Ghatkopar East Mumbai , Maharashtra , 400077</p>
+                      <p className="text-foreground/80">Office number 153 Bulding no 6 mittal indrustrial estate sir M V road Andheri east Mumbai 400059</p>
                     </div>
                   </div>
                 </CardContent>
