@@ -1,2 +1,3 @@
+import { nextGenkit } from '@genkit-ai/next';
 
-export { GET, POST } from '@genkit-ai/next/server';
+export const { GET, POST } = nextGenkit();
