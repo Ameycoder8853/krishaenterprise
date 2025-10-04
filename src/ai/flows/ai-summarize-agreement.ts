@@ -35,13 +35,13 @@ export async function summarizeAgreement(input: SummarizeAgreementInput): Promis
 
 const summarizeAgreementPrompt = ai.definePrompt({
   name: 'summarizeAgreementPrompt',
-  input: {schema: SummarizeAgreementInputSchema},
-  output: {schema: SummarizeAgreementOutputSchema},
+  inputSchema: SummarizeAgreementInputSchema,
+  outputSchema: SummarizeAgreementOutputSchema,
   prompt: `Summarize the following legal agreement:
 
 {{{agreementText}}}
 
-Provide a concise summary highlighting the key points.`, // Corrected template syntax
+Provide a concise summary highlighting the key points.`,
 });
 
 const summarizeAgreementFlow = ai.defineFlow(
