@@ -55,12 +55,11 @@ export default function Header() {
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Image
-      src="/logo.png"
-      width={500}
-      height={500}
-      alt="krisha Enterprise"
-    />
+              <img 
+                src="/logo.png" 
+                alt="Krisha Enterprise" 
+                className="h-12 w-12 rounded-full"
+              />
             <span className="font-bold sm:inline-block font-headline">Krisha Enterprise</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
