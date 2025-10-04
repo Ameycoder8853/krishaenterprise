@@ -15,12 +15,13 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from '../ui/separator';
 
 const navLinks = [
-    { name: 'About Us', href: '/about/' },
+    { name: 'About Us', href: '/about' },
     { name: 'How it Works', href: '/#how-it-works' },
     { name: 'Stamp Duty Calculator', href: '/calculator' },
     { name: 'Why Choose Us', href: '/#why-choose-us' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Blog', href: '/blog' },
 ];
 
 export default function Header() {
@@ -167,3 +168,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
