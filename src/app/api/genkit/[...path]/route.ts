@@ -1,3 +1,2 @@
-import { createApi } from '@genkit-ai/next';
 
-export const { GET, POST } = createApi();
+export { GET, POST } from '@genkit-ai/next/server';
