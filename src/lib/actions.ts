@@ -44,7 +44,7 @@ export async function sendContactEmail(formData: ContactFormData) {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Krisha Enterprise <onboarding@resend.dev>',
-      to: ['krishnaenterprise.in@gmail.com'],
+      to: ['krishaenterprise.in@gmail.com'],
       subject: subject,
       html: body,
     });
