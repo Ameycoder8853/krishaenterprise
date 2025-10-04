@@ -6,7 +6,7 @@ import { ContactPopup } from '@/components/contact-popup';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'KE Online Rent Agreement Registration',
+  title: 'K.E Online Rent Agreement Mumbai',
   description: 'Your trusted partner for legal agreements.',
 };
 
