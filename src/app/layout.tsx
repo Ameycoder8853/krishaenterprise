@@ -31,6 +31,7 @@ export default function RootLayout({
         <FirebaseClientProvider>
           <ContactPopup />
           {children}
+          <ClickToCallButton />
           <Toaster />
         </FirebaseClientProvider>
       </body>
