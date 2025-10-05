@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ContactPopup } from '@/components/contact-popup';
 import { FirebaseClientProvider } from '@/firebase';
+import { ClickToCallButton } from '@/components/click-to-call-button';
 
 export const metadata: Metadata = {
   title: 'K.E Online Rent Agreement Mumbai',
